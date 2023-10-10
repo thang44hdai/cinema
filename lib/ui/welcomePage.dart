@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:lottie/lottie.dart';
 
 TextEditingController _tkController = TextEditingController();
 TextEditingController _mkController = TextEditingController();
@@ -18,21 +19,22 @@ class welcomePage extends StatelessWidget {
         selectedIndex: -1,
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         gap: 10,
-        tabBackgroundColor: Colors.lightBlueAccent,
+        tabBackgroundColor: Color.fromRGBO(52, 101, 217, 1),
         padding: EdgeInsets.all(10),
         tabMargin: EdgeInsets.only(bottom: 10),
         tabs: [
           GButton(
-            icon: Icons.home,
+            icon: Icons.home_outlined,
             text: "Login",
+            textColor: Colors.white,
             onPressed: () {
               showDialog(
                 context: context,
                 builder: (BuildContext context) {
                   return Center(
                     child: FractionallySizedBox(
-                      widthFactor: 0.8,
-                      heightFactor: 0.48,
+                      widthFactor: 0.9,
+                      heightFactor: 0.8,
                       child: LoginDialog(),
                     ),
                   );
@@ -43,14 +45,15 @@ class welcomePage extends StatelessWidget {
           GButton(
             icon: Icons.app_registration,
             text: "Register",
+            textColor: Colors.white,
             onPressed: () {
               showDialog(
                 context: context,
                 builder: (BuildContext context) {
                   return Center(
                     child: FractionallySizedBox(
-                      widthFactor: 0.8,
-                      heightFactor: 0.5,
+                      widthFactor: 0.9,
+                      heightFactor: 0.8,
                       child: RegisterDialog(),
                     ),
                   );
@@ -61,14 +64,15 @@ class welcomePage extends StatelessWidget {
           GButton(
             icon: Icons.question_answer,
             text: "Thắc mắc",
+            textColor: Colors.white,
             onPressed: () {
               showDialog(
                 context: context,
                 builder: (BuildContext context) {
                   return Center(
                     child: FractionallySizedBox(
-                      widthFactor: 0.8,
-                      heightFactor: 0.5,
+                      widthFactor: 0.9,
+                      heightFactor: 0.8,
                       child: RetrieveDialog(),
                     ),
                   );
@@ -87,13 +91,54 @@ class welcomePage extends StatelessWidget {
               bottomLeft: Radius.circular(50),
             ),
             child: Container(
-              height: screenHeight / 4,
-              width: screenWidth,
-              color: Colors.black12,
+              height: screenHeight / 3.5,
+              child: Image(
+                image: NetworkImage(
+                    "https://channel.mediacdn.vn/428462621602512896/2023/7/5/photo-2-1688527936105123487460.jpg"),
+              ),
             ),
           ),
           const SizedBox(
-            height: 10,
+            height: 20,
+          ),
+          Row(
+            children: [
+              Container(
+                height: screenHeight / 7,
+                child: Lottie.asset("assets/B.json"),
+              ),
+              Container(
+                height: screenHeight / 7,
+                child: Lottie.asset("assets/E.json"),
+              ),
+              Container(
+                height: screenHeight / 7,
+                child: Lottie.asset("assets/T.json"),
+              ),
+              Container(
+                height: screenHeight / 7,
+                child: Lottie.asset("assets/A.json"),
+              ),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Padding(
+                padding: EdgeInsets.only(right: 30),
+                child: Text(
+                  "C I N E M A",
+                  style: TextStyle(fontSize: 20),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          Container(
+            height: screenHeight / 5,
+            child: Lottie.asset("assets/play.json"),
           ),
         ],
       ),
@@ -105,6 +150,7 @@ class LoginDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Dialog(
+      backgroundColor: Color.fromRGBO(159, 182, 237, 1),
       child: Padding(
         padding: EdgeInsets.only(
           top: 50,
@@ -116,7 +162,11 @@ class LoginDialog extends StatelessWidget {
             children: [
               Text(
                 "Login",
-                style: TextStyle(fontSize: 20),
+                style: TextStyle(
+                  fontSize: 20,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               TextField(
                 controller: _tkController,
@@ -145,6 +195,7 @@ class RegisterDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Dialog(
+      backgroundColor: Color.fromRGBO(159, 182, 237, 1),
       child: Padding(
         padding: EdgeInsets.only(
           top: 40,
@@ -156,7 +207,11 @@ class RegisterDialog extends StatelessWidget {
             children: [
               Text(
                 "Register",
-                style: TextStyle(fontSize: 20),
+                style: TextStyle(
+                  fontSize: 20,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               TextField(
                 controller: _tkController,
@@ -191,6 +246,7 @@ class RetrieveDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Dialog(
+      backgroundColor: Color.fromRGBO(159, 182, 237, 1),
       child: Padding(
         padding: EdgeInsets.only(
           top: 40,
@@ -202,7 +258,11 @@ class RetrieveDialog extends StatelessWidget {
             children: [
               Text(
                 "Retrieve PassWord",
-                style: TextStyle(fontSize: 20),
+                style: TextStyle(
+                  fontSize: 20,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               SizedBox(
                 height: 20,
