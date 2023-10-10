@@ -1,9 +1,10 @@
-import 'package:cinema/ui/homePage.dart';
+import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:lottie/lottie.dart';
+
+import 'homePage.dart';
 
 TextEditingController _tkController = TextEditingController();
 TextEditingController _mkController = TextEditingController();
@@ -164,6 +165,7 @@ void signIn(BuildContext context, String tk, String mk) async {
       ),
     );
   } catch (e) {
+    print("sjajds");
     return showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -211,8 +213,11 @@ class LoginDialog extends StatelessWidget {
                 decoration: InputDecoration(hintText: "Email:"),
               ),
               TextField(
+                obscureText: true,
                 controller: _mkController,
-                decoration: InputDecoration(hintText: "Mật khẩu: "),
+                decoration: InputDecoration(
+                  hintText: "Mật khẩu: ",
+                ),
               ),
               SizedBox(
                 height: 20,
@@ -258,12 +263,16 @@ class RegisterDialog extends StatelessWidget {
                 decoration: InputDecoration(hintText: "Email:"),
               ),
               TextField(
+                obscureText: true,
                 controller: _mkController,
                 decoration: InputDecoration(hintText: "Mật khẩu: "),
               ),
               TextField(
+                obscureText: true,
                 controller: _verifyPassWord,
-                decoration: InputDecoration(hintText: "Nhập lại mật khẩu: "),
+                decoration: InputDecoration(
+                  hintText: "Nhập lại mật khẩu: ",
+                ),
               ),
               SizedBox(
                 height: 20,
@@ -274,6 +283,19 @@ class RegisterDialog extends StatelessWidget {
                   auth.createUserWithEmailAndPassword(
                       email: _tkController.text, password: _mkController.text);
                   Navigator.pop(context);
+                  _tkController.text = _mkController.text = "";
+                  // Hiển thị thông báo đăng kí thành công
+                  final snackBar = SnackBar(
+                    content: Text('Đăng kí thành công!'),
+                  );
+                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                  // Đóng thông báo sau 2 giây
+                  Timer(
+                    Duration(seconds: 2),
+                    () {
+                      ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                    },
+                  );
                 },
                 child: Icon(Icons.app_registration_sharp),
               )
