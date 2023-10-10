@@ -1,3 +1,6 @@
+import 'package:cinema/ui/homePage.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:lottie/lottie.dart';
@@ -15,6 +18,67 @@ class welcomePage extends StatelessWidget {
     double screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          ClipRRect(
+            borderRadius: const BorderRadius.only(
+              bottomRight: Radius.circular(20),
+              bottomLeft: Radius.circular(20),
+            ),
+            child: Container(
+              //color: Colors.brown,
+              height: screenHeight / 3.5,
+              child: Image(
+                image: NetworkImage(
+                    "https://channel.mediacdn.vn/428462621602512896/2023/7/5/photo-2-1688527936105123487460.jpg"),
+              ),
+            ),
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          Row(
+            children: [
+              Container(
+                height: screenHeight / 7,
+                child: Lottie.asset("assets/B.json"),
+              ),
+              Container(
+                height: screenHeight / 7,
+                child: Lottie.asset("assets/E.json"),
+              ),
+              Container(
+                height: screenHeight / 7,
+                child: Lottie.asset("assets/T.json"),
+              ),
+              Container(
+                height: screenHeight / 7,
+                child: Lottie.asset("assets/A.json"),
+              ),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Padding(
+                padding: EdgeInsets.only(right: 30),
+                child: Text(
+                  "C I N E M A",
+                  style: TextStyle(fontSize: 20),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          Container(
+            height: screenHeight / 5,
+            child: Lottie.asset("assets/play.json"),
+          ),
+        ],
+      ),
       bottomNavigationBar: GNav(
         selectedIndex: -1,
         mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -82,66 +146,40 @@ class welcomePage extends StatelessWidget {
           ),
         ],
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          ClipRRect(
-            borderRadius: const BorderRadius.only(
-              bottomRight: Radius.circular(50),
-              bottomLeft: Radius.circular(50),
-            ),
-            child: Container(
-              height: screenHeight / 3.5,
-              child: Image(
-                image: NetworkImage(
-                    "https://channel.mediacdn.vn/428462621602512896/2023/7/5/photo-2-1688527936105123487460.jpg"),
-              ),
-            ),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          Row(
-            children: [
-              Container(
-                height: screenHeight / 7,
-                child: Lottie.asset("assets/B.json"),
-              ),
-              Container(
-                height: screenHeight / 7,
-                child: Lottie.asset("assets/E.json"),
-              ),
-              Container(
-                height: screenHeight / 7,
-                child: Lottie.asset("assets/T.json"),
-              ),
-              Container(
-                height: screenHeight / 7,
-                child: Lottie.asset("assets/A.json"),
-              ),
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Padding(
-                padding: EdgeInsets.only(right: 30),
-                child: Text(
-                  "C I N E M A",
-                  style: TextStyle(fontSize: 20),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          Container(
-            height: screenHeight / 5,
-            child: Lottie.asset("assets/play.json"),
-          ),
-        ],
+    );
+  }
+}
+
+void signIn(BuildContext context, String tk, String mk) async {
+  try {
+    final auth = FirebaseAuth.instance;
+    UserCredential userCredential = await auth.signInWithEmailAndPassword(
+      email: tk,
+      password: mk,
+    );
+    // Đăng nhập thành công, chuyển hướng sang màn hình khác
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(
+        builder: (context) => homePage(),
       ),
+    );
+  } catch (e) {
+    return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Thông báo'),
+          content: Text('Tài khoản hoặc mật khẩu không chính xác!'),
+          actions: [
+            TextButton(
+              child: Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }
@@ -180,7 +218,9 @@ class LoginDialog extends StatelessWidget {
                 height: 20,
               ),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  signIn(context, _tkController.text, _mkController.text);
+                },
                 child: Icon(Icons.login),
               )
             ],
@@ -229,7 +269,12 @@ class RegisterDialog extends StatelessWidget {
                 height: 20,
               ),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  final auth = FirebaseAuth.instance;
+                  auth.createUserWithEmailAndPassword(
+                      email: _tkController.text, password: _mkController.text);
+                  Navigator.pop(context);
+                },
                 child: Icon(Icons.app_registration_sharp),
               )
             ],
