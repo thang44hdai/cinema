@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
@@ -38,16 +37,20 @@ class welcomePage extends StatelessWidget {
           SizedBox(
             height: 200,
             width: double.infinity,
-            child: ListView.builder(
+            child: PageView.builder(
               scrollDirection: Axis.horizontal,
               itemCount: film.length,
               itemBuilder: (context, index) {
-                return Container(
-                  width: screenWidth,
-                  padding: EdgeInsets.only(top: 20),
-                  child: Image(
-                    image: NetworkImage(film[index]),
-                  ),
+                return Stack(
+                  children: [
+                    Container(
+                      width: screenWidth,
+                      padding: EdgeInsets.only(top: 20),
+                      child: Image(
+                        image: NetworkImage(film[index]),
+                      ),
+                    ),
+                  ],
                 );
               },
             ),
