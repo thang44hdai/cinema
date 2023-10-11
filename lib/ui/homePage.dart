@@ -27,7 +27,7 @@ class _homePageState extends State<homePage> {
             Padding(
               padding: EdgeInsets.only(left: 10, bottom: 10),
               child: Text(
-                "Trending Movies in Beta",
+                "Trending",
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
             ),
@@ -36,16 +36,17 @@ class _homePageState extends State<homePage> {
                 itemCount: 2,
                 itemBuilder: (context, index, pageIndex) {
                   return Container(
-                      height: 30,
-                      width: 180,
-                      color: Colors.amber,
-                      child: Lottie.asset("assets/animation.json"));
+                    height: 30,
+                    width: 180,
+                    color: Colors.amber,
+                    child: Lottie.asset("assets/animation.json"),
+                  );
                 },
                 options: CarouselOptions(
                   autoPlay: true,
                   autoPlayInterval: Duration(milliseconds: 3000),
                   viewportFraction: 0.5,
-                  enlargeCenterPage: true,
+                  enlargeCenterPage: true,// cho layout chinh giữa to nhất
                 ),
               ),
             ),
@@ -80,7 +81,6 @@ class _homePageState extends State<homePage> {
                       height: 200,
                       width: 200,
                     ),
-
                   );
                 },
               ),

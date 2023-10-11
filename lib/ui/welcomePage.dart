@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
@@ -11,6 +12,17 @@ TextEditingController _mkController = TextEditingController();
 TextEditingController _verifyPassWord = TextEditingController();
 TextEditingController _nameUser = TextEditingController();
 
+const String x1 =
+    "https://files.betacorp.vn/files/ecm/2023/10/05/don-thang-quy-di-combo-ma-mi-1702-x-621-shrink-113717-051023-74.jpg";
+const String x2 =
+    "https://files.betacorp.vn/files/ecm/2023/09/26/vnpaybeta-1702-x-621-145207-260923-41.png";
+const String x3 =
+    "https://files.betacorp.vn/files/ecm/2023/10/11/1702x621-093810-111023-40.jpg";
+const String x4 =
+    "https://files.betacorp.vn/files/ecm/2023/09/25/vani-bc-1702x621-copy-133653-250923-54.jpg";
+const String x5 =
+    "https://files.betacorp.vn/files/ecm/2023/04/21/mer-resize-1702-x-621-140337-210423-86.png";
+
 class welcomePage extends StatelessWidget {
   const welcomePage({super.key});
 
@@ -18,63 +30,66 @@ class welcomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
-
+    List<String> film = [x1, x2, x3, x4, x5];
     return Scaffold(
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          ClipRRect(
-            borderRadius: const BorderRadius.only(
-              bottomRight: Radius.circular(20),
-              bottomLeft: Radius.circular(20),
-            ),
-            child: Container(
-              //color: Colors.brown,
-              height: screenHeight / 3.5,
-              child: Image(
-                image: NetworkImage(
-                    "https://channel.mediacdn.vn/428462621602512896/2023/7/5/photo-2-1688527936105123487460.jpg"),
-              ),
+          SizedBox(
+            height: 200,
+            width: double.infinity,
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: film.length,
+              itemBuilder: (context, index) {
+                return Container(
+                  width: screenWidth,
+                  padding: EdgeInsets.only(top: 20),
+                  child: Image(
+                    image: NetworkImage(film[index]),
+                  ),
+                );
+              },
             ),
           ),
           const SizedBox(
             height: 20,
           ),
-          Row(
-            children: [
-              Container(
-                height: screenHeight / 7,
-                child: Lottie.asset("assets/B.json"),
-              ),
-              Container(
-                height: screenHeight / 7,
-                child: Lottie.asset("assets/E.json"),
-              ),
-              Container(
-                height: screenHeight / 7,
-                child: Lottie.asset("assets/T.json"),
-              ),
-              Container(
-                height: screenHeight / 7,
-                child: Lottie.asset("assets/A.json"),
-              ),
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Padding(
-                padding: EdgeInsets.only(right: 30),
-                child: Text(
-                  "C I N E M A",
-                  style: TextStyle(fontSize: 20),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(
-            height: 20,
-          ),
+          // Row(
+          //   children: [
+          //     Container(
+          //       height: screenHeight / 7,
+          //       child: Lottie.asset("assets/B.json"),
+          //     ),
+          //     Container(
+          //       height: screenHeight / 7,
+          //       child: Lottie.asset("assets/E.json"),
+          //     ),
+          //     Container(
+          //       height: screenHeight / 7,
+          //       child: Lottie.asset("assets/T.json"),
+          //     ),
+          //     Container(
+          //       height: screenHeight / 7,
+          //       child: Lottie.asset("assets/A.json"),
+          //     ),
+          //   ],
+          // ),
+          // Row(
+          //   mainAxisAlignment: MainAxisAlignment.end,
+          //   children: [
+          //     Padding(
+          //       padding: EdgeInsets.only(right: 30),
+          //       child: Text(
+          //         "C I N E M A",
+          //         style: TextStyle(fontSize: 20),
+          //       ),
+          //     ),
+          //   ],
+          // ),
+          // const SizedBox(
+          //   height: 20,
+          // ),
           Container(
             height: screenHeight / 5,
             child: Lottie.asset("assets/play.json"),
