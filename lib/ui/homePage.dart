@@ -74,7 +74,13 @@ class _homePageState extends State<homePage> {
                     margin: EdgeInsets.only(right: 10),
                     height: 200,
                     width: 200,
-                    color: Colors.amber,
+                    child: Image(
+                      image: NetworkImage(
+                          "https://thumbs.dreamstime.com/b/bridges-movie-standee-american-action-thriller-film-directed-brian-kirk-kuala-lumpur-malaysia-january-170042641.jpg"),
+                      height: 200,
+                      width: 200,
+                    ),
+
                   );
                 },
               ),
