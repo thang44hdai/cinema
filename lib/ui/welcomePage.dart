@@ -9,6 +9,7 @@ import 'homePage.dart';
 TextEditingController _tkController = TextEditingController();
 TextEditingController _mkController = TextEditingController();
 TextEditingController _verifyPassWord = TextEditingController();
+TextEditingController _nameUser = TextEditingController();
 
 class welcomePage extends StatelessWidget {
   const welcomePage({super.key});
@@ -151,7 +152,7 @@ class welcomePage extends StatelessWidget {
   }
 }
 
-void signIn(BuildContext context, String tk, String mk) async {
+void signIn(BuildContext context, String tk, String mk, String name) async {
   try {
     final auth = FirebaseAuth.instance;
     UserCredential userCredential = await auth.signInWithEmailAndPassword(
@@ -161,11 +162,12 @@ void signIn(BuildContext context, String tk, String mk) async {
     // Đăng nhập thành công, chuyển hướng sang màn hình khác
     Navigator.of(context).pushReplacement(
       MaterialPageRoute(
-        builder: (context) => homePage(),
+        builder: (context) => homePage(
+          name: name,
+        ),
       ),
     );
   } catch (e) {
-    print("sjajds");
     return showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -224,7 +226,8 @@ class LoginDialog extends StatelessWidget {
               ),
               ElevatedButton(
                 onPressed: () {
-                  signIn(context, _tkController.text, _mkController.text);
+                  signIn(context, _tkController.text, _mkController.text,
+                      _nameUser.text);
                 },
                 child: Icon(Icons.login),
               )
@@ -261,6 +264,12 @@ class RegisterDialog extends StatelessWidget {
               TextField(
                 controller: _tkController,
                 decoration: InputDecoration(hintText: "Email:"),
+              ),
+              TextField(
+                controller: _nameUser,
+                decoration: InputDecoration(
+                  hintText: "Họ và tên:",
+                ),
               ),
               TextField(
                 obscureText: true,
