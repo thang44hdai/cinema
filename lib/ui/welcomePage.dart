@@ -93,9 +93,33 @@ class welcomePage extends StatelessWidget {
           // const SizedBox(
           //   height: 20,
           // ),
-          Container(
-            height: screenHeight / 5,
-            child: Lottie.asset("assets/play.json"),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Container(
+                height: screenHeight / 5,
+                child: Lottie.asset("assets/B.json"),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 8),
+                child: Text(
+                  "e  t  a",
+                  style: TextStyle(fontSize: 80, fontWeight: FontWeight.bold),
+                ),
+              )
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(right: 35),
+                child: Text(
+                  "CINEMA",
+                  style: TextStyle(fontSize: 20),
+                ),
+              )
+            ],
           ),
         ],
       ),
