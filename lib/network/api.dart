@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:cinema/models/constants.dart';
-import 'movie.dart';
+import '../models/movie.dart';
 import 'package:http/http.dart' as http;
 
 class Api {
