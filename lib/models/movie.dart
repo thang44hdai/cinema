@@ -5,7 +5,7 @@ class Movie {
   String overview;
   String poster_path;
   String release_date;
-  double vote_average;
+  String vote_average;
 
   Movie({
     required this.title,
@@ -25,7 +25,7 @@ class Movie {
       overview: json["overview"] ?? "false",
       poster_path: json["poster_path"] ?? "false",
       release_date: json["release_date"] ?? "false",
-      vote_average: json["vote_average"] ?? "false",
+      vote_average: json["vote_average"].toString() ?? "false",
     );
   }
 }

@@ -1,6 +1,10 @@
+import 'package:cinema/ui/elementOfhomePage/food.dart';
+import 'package:cinema/ui/elementOfhomePage/isPlayingMovies.dart';
 import 'package:cinema/ui/elementOfhomePage/trendingMovies.dart';
+import 'package:cinema/ui/elementOfhomePage/upComingMovies.dart';
+import 'package:cinema/viewmodel/ViewModel.dart';
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
+import 'package:provider/provider.dart';
 import '../network/api.dart';
 import '../models/movie.dart';
 
@@ -15,17 +19,22 @@ class homePage extends StatefulWidget {
 
 class _homePageState extends State<homePage> {
   late Future<List<Movie>> future_trendingMovie;
+  late Future<List<Movie>> future_isPlayingMovie;
+  late Future<List<Movie>> future_upComingMovie;
 
   @override
   void initState() {
     super.initState();
     future_trendingMovie = Api().getTrendingMovies();
+    future_isPlayingMovie = Api().getIsPlayingMovies();
+    future_upComingMovie = Api().getUpComingMovies();
   }
 
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
+    final viewmodel = Provider.of<ViewModel>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text("Hello ${widget.name}"),
@@ -35,7 +44,7 @@ class _homePageState extends State<homePage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Trending Movies
-            Padding(
+            const Padding(
               padding: EdgeInsets.only(left: 10, bottom: 10),
               child: Text(
                 "Trending",
@@ -44,28 +53,30 @@ class _homePageState extends State<homePage> {
             ),
             SizedBox(
               child: FutureBuilder(
-                  future: future_trendingMovie,
-                  builder: (context, snapshot) {
-                    if (snapshot.hasError) {
-                      return Center(
-                        child: Text("${snapshot.error}"),
-                      );
-                    } else if (snapshot.hasData) {
-                      return trendingMovies(snapshot: snapshot);
-                    } else
-                      return Center(
-                        child: Container(
-                          color: Colors.amber,
-                        )
-                      );
-                  }),
+                future: future_trendingMovie,
+                builder: (context, snapshot) {
+                  if (snapshot.hasError) {
+                    return Center(
+                      child: Text("${snapshot.error}"),
+                    );
+                  } else if (snapshot.hasData) {
+                    return trendingMovies(snapshot: snapshot);
+                  } else {
+                    return Center(
+                      child: Container(
+                        color: Colors.amber,
+                      ),
+                    );
+                  }
+                },
+              ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
 
             // Hiện đang khởi chiếu
-            Padding(
+            const Padding(
               padding: EdgeInsets.only(
                 left: 10,
                 bottom: 10,
@@ -76,33 +87,33 @@ class _homePageState extends State<homePage> {
               ),
             ),
             SizedBox(
-              height: 200,
-              width: double.infinity,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                physics: BouncingScrollPhysics(),
-                itemCount: 5,
-                itemBuilder: (context, index) {
-                  return Container(
-                    margin: EdgeInsets.only(right: 10),
-                    height: 200,
-                    width: 200,
-                    child: Image(
-                      image: NetworkImage(
-                          "https://thumbs.dreamstime.com/b/bridges-movie-standee-american-action-thriller-film-directed-brian-kirk-kuala-lumpur-malaysia-january-170042641.jpg"),
-                      height: 200,
-                      width: 200,
-                    ),
-                  );
+              child: FutureBuilder(
+                future: future_isPlayingMovie,
+                builder: (context, snapshot) {
+                  if (snapshot.hasError) {
+                    return Center(
+                      child: Text("${snapshot.error}"),
+                    );
+                  } else if (snapshot.hasData) {
+                    return isPlayingMovies(
+                      snapshot: snapshot,
+                    );
+                  } else {
+                    return Center(
+                      child: Container(
+                        color: Colors.amber,
+                      ),
+                    );
+                  }
                 },
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
 
             // Sắp phát hành
-            Padding(
+            const Padding(
               padding: EdgeInsets.only(
                 left: 10,
                 bottom: 10,
@@ -113,28 +124,31 @@ class _homePageState extends State<homePage> {
               ),
             ),
             SizedBox(
-              height: 200,
-              width: double.infinity,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                physics: BouncingScrollPhysics(),
-                itemCount: 5,
-                itemBuilder: (context, index) {
-                  return Container(
-                    margin: EdgeInsets.only(right: 10),
-                    height: 200,
-                    width: 200,
-                    color: Colors.amber,
-                  );
+              child: FutureBuilder(
+                future: future_upComingMovie,
+                builder: (context, snapshot) {
+                  if (snapshot.hasError) {
+                    return Container(
+                      child: Text("${snapshot.error}"),
+                    );
+                  } else if (snapshot.hasData) {
+                    return upComingMovies(snapshot: snapshot);
+                  } else {
+                    return Center(
+                      child: Container(
+                        color: Colors.amber,
+                      ),
+                    );
+                  }
                 },
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
 
             // Menu food
-            Padding(
+            const Padding(
               padding: EdgeInsets.only(
                 left: 10,
                 bottom: 10,
@@ -145,19 +159,10 @@ class _homePageState extends State<homePage> {
               ),
             ),
             SizedBox(
-              height: 200,
-              width: double.infinity,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                physics: BouncingScrollPhysics(),
-                itemCount: 5,
-                itemBuilder: (context, index) {
-                  return Container(
-                    margin: EdgeInsets.only(right: 10),
-                    height: 200,
-                    width: 200,
-                    color: Colors.amber,
-                  );
+              child: FutureBuilder(
+                future: viewmodel.read_data(),
+                builder: (context, snapshot) {
+                  return Food(vm: snapshot);
                 },
               ),
             ),

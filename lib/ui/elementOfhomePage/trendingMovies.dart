@@ -1,7 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
-
 import '../../models/constants.dart';
 
 class trendingMovies extends StatelessWidget {
@@ -14,14 +12,19 @@ class trendingMovies extends StatelessWidget {
     return CarouselSlider.builder(
       itemCount: snapshot.data.length,
       itemBuilder: (context, index, pageIndex) {
-        return Container(
-          height: 30,
-          width: 180,
-          color: Colors.amber,
-          child: Image(
-            image: NetworkImage(
-                '${Constants.imagePath}${snapshot.data[index].poster_path}'),
-            fit: BoxFit.cover,
+        return ClipRRect(
+          borderRadius: const BorderRadius.all(
+            Radius.circular(20),
+          ),
+          child: Container(
+            height: 30,
+            width: 180,
+            color: Colors.amber,
+            child: Image(
+              image: NetworkImage(
+                  '${Constants.imagePath}${snapshot.data[index].poster_path}'),
+              fit: BoxFit.cover,
+            ),
           ),
         );
       },

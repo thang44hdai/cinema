@@ -58,56 +58,28 @@ class welcomePage extends StatelessWidget {
           const SizedBox(
             height: 20,
           ),
-          // Row(
-          //   children: [
-          //     Container(
-          //       height: screenHeight / 7,
-          //       child: Lottie.asset("assets/B.json"),
-          //     ),
-          //     Container(
-          //       height: screenHeight / 7,
-          //       child: Lottie.asset("assets/E.json"),
-          //     ),
-          //     Container(
-          //       height: screenHeight / 7,
-          //       child: Lottie.asset("assets/T.json"),
-          //     ),
-          //     Container(
-          //       height: screenHeight / 7,
-          //       child: Lottie.asset("assets/A.json"),
-          //     ),
-          //   ],
-          // ),
-          // Row(
-          //   mainAxisAlignment: MainAxisAlignment.end,
-          //   children: [
-          //     Padding(
-          //       padding: EdgeInsets.only(right: 30),
-          //       child: Text(
-          //         "C I N E M A",
-          //         style: TextStyle(fontSize: 20),
-          //       ),
-          //     ),
-          //   ],
-          // ),
-          // const SizedBox(
-          //   height: 20,
-          // ),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Container(
-                height: screenHeight / 5,
-                child: Lottie.asset("assets/B.json"),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 8),
-                child: Text(
-                  "e  t  a",
-                  style: TextStyle(fontSize: 80, fontWeight: FontWeight.bold),
+          Padding(
+            padding: EdgeInsets.only(left: 30),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Container(
+                  height: screenHeight / 5,
+                  child: Lottie.asset("assets/B.json"),
                 ),
-              )
-            ],
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 8),
+                  child: Text(
+                    "e  t  a",
+                    style: TextStyle(
+                      fontSize: 80,
+                      fontWeight: FontWeight.bold,
+                      color: Color.fromRGBO(18, 36, 64, 1),
+                    ),
+                  ),
+                )
+              ],
+            ),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
@@ -116,7 +88,10 @@ class welcomePage extends StatelessWidget {
                 padding: const EdgeInsets.only(right: 35),
                 child: Text(
                   "CINEMA",
-                  style: TextStyle(fontSize: 20),
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: Color.fromRGBO(18, 36, 64, 1),
+                  ),
                 ),
               )
             ],
