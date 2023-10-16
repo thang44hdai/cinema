@@ -1,6 +1,8 @@
-import 'package:carousel_slider/carousel_slider.dart';
+import 'package:cinema/ui/elementOfhomePage/trendingMovies.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import '../models/api.dart';
+import '../models/movie.dart';
 
 class homePage extends StatefulWidget {
   final String name;
@@ -12,6 +14,14 @@ class homePage extends StatefulWidget {
 }
 
 class _homePageState extends State<homePage> {
+  late Future<List<Movie>> future_trendingMovie;
+
+  @override
+  void initState() {
+    super.initState();
+    future_trendingMovie = Api().getTrendingMovies();
+  }
+
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
@@ -24,6 +34,7 @@ class _homePageState extends State<homePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            // Trending Movies
             Padding(
               padding: EdgeInsets.only(left: 10, bottom: 10),
               child: Text(
@@ -32,27 +43,28 @@ class _homePageState extends State<homePage> {
               ),
             ),
             SizedBox(
-              child: CarouselSlider.builder(
-                itemCount: 2,
-                itemBuilder: (context, index, pageIndex) {
-                  return Container(
-                    height: 30,
-                    width: 180,
-                    color: Colors.amber,
-                    child: Lottie.asset("assets/animation.json"),
-                  );
-                },
-                options: CarouselOptions(
-                  autoPlay: true,
-                  autoPlayInterval: Duration(milliseconds: 3000),
-                  viewportFraction: 0.5,
-                  enlargeCenterPage: true,// cho layout chinh giữa to nhất
-                ),
-              ),
+              child: FutureBuilder(
+                  future: future_trendingMovie,
+                  builder: (context, snapshot) {
+                    if (snapshot.hasError) {
+                      return Center(
+                        child: Text("${snapshot.error}"),
+                      );
+                    } else if (snapshot.hasData) {
+                      return trendingMovies(snapshot: snapshot);
+                    } else
+                      return Center(
+                        child: Container(
+                          color: Colors.amber,
+                        )
+                      );
+                  }),
             ),
             SizedBox(
               height: 20,
             ),
+
+            // Hiện đang khởi chiếu
             Padding(
               padding: EdgeInsets.only(
                 left: 10,
@@ -88,6 +100,8 @@ class _homePageState extends State<homePage> {
             SizedBox(
               height: 20,
             ),
+
+            // Sắp phát hành
             Padding(
               padding: EdgeInsets.only(
                 left: 10,
@@ -118,6 +132,8 @@ class _homePageState extends State<homePage> {
             SizedBox(
               height: 20,
             ),
+
+            // Menu food
             Padding(
               padding: EdgeInsets.only(
                 left: 10,
@@ -144,6 +160,9 @@ class _homePageState extends State<homePage> {
                   );
                 },
               ),
+            ),
+            SizedBox(
+              height: 30,
             ),
           ],
         ),
