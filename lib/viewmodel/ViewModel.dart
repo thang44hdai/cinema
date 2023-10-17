@@ -7,19 +7,14 @@ class ViewModel {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   List<food> menu = [];
 
-  Future<List<food>> read_data() async {
-    try {
-      await firestore.collection("food").get().then((QuerySnapshot snapshot) {
-        snapshot.docs.forEach((DocumentSnapshot document) {
-          final Map<String, dynamic> mp =
-              document.data() as Map<String, dynamic>;
-          menu.add(food(image: mp['image'], name: mp['name']));
-        });
-      });
-      return menu;
-    } catch (e) {
-      print("Error $e");
-      return [];
-    }
+  Stream<List<food>> getAll() {
+    Stream<QuerySnapshot<Map<String, dynamic>>> snapshot =
+        firestore.collection("food").snapshots();
+    return firestore.collection("food").snapshots().map((snapshot) {
+      return snapshot.docs.map((doc) {
+        food fo = food.fromFirestore(doc);
+        return fo;
+      }).toList();
+    });
   }
 }

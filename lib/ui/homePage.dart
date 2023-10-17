@@ -21,7 +21,6 @@ class _homePageState extends State<homePage> {
   late Future<List<Movie>> future_trendingMovie;
   late Future<List<Movie>> future_isPlayingMovie;
   late Future<List<Movie>> future_upComingMovie;
-
   @override
   void initState() {
     super.initState();
@@ -34,7 +33,7 @@ class _homePageState extends State<homePage> {
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
-    final viewmodel = Provider.of<ViewModel>(context);
+
     return Scaffold(
       appBar: AppBar(
         title: Text("Hello ${widget.name}"),
@@ -159,12 +158,7 @@ class _homePageState extends State<homePage> {
               ),
             ),
             SizedBox(
-              child: FutureBuilder(
-                future: viewmodel.read_data(),
-                builder: (context, snapshot) {
-                  return Food(vm: snapshot);
-                },
-              ),
+              child: Food(),
             ),
             SizedBox(
               height: 30,
