@@ -3,5 +3,5 @@ class Constants {
   static String trendingUrl = 'https://api.themoviedb.org/3/trending/movie/day?api_key=';
   static String isPlayingUrl = 'https://api.themoviedb.org/3/movie/now_playing?api_key=';
   static String upComingUrl = 'https://api.themoviedb.org/3/movie/upcoming?api_key=';
-  static String imagePath = 'https://image.tmdb.org/t/p/w500';
+  static String imagePath = 'https://image.tmdb.org/t/p/original';
 }

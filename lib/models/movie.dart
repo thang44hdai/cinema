@@ -6,6 +6,8 @@ class Movie {
   String poster_path;
   String release_date;
   String vote_average;
+  String popularity;
+  String vote_count;
 
   Movie({
     required this.title,
@@ -15,6 +17,8 @@ class Movie {
     required this.poster_path,
     required this.release_date,
     required this.vote_average,
+    required this.popularity,
+    required this.vote_count,
   });
 
   factory Movie.fromJson(Map<String, dynamic> json) {
@@ -26,6 +30,8 @@ class Movie {
       poster_path: json["poster_path"] ?? "false",
       release_date: json["release_date"] ?? "false",
       vote_average: json["vote_average"].toString() ?? "false",
+      popularity: json['popularity'].toString() ?? "false",
+      vote_count: json['vote_count'].toString() ?? "false",
     );
   }
 }

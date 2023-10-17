@@ -1,4 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:cinema/ui/detail_film.dart';
 import 'package:flutter/material.dart';
 import '../../models/constants.dart';
 
@@ -12,18 +13,29 @@ class trendingMovies extends StatelessWidget {
     return CarouselSlider.builder(
       itemCount: snapshot.data.length,
       itemBuilder: (context, index, pageIndex) {
-        return ClipRRect(
-          borderRadius: const BorderRadius.all(
-            Radius.circular(20),
-          ),
-          child: Container(
-            height: 30,
-            width: 180,
-            color: Colors.amber,
-            child: Image(
-              image: NetworkImage(
-                  '${Constants.imagePath}${snapshot.data[index].poster_path}'),
-              fit: BoxFit.cover,
+        return GestureDetector(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => detail_film(
+                        movie: snapshot.data[index],
+                      )),
+            );
+          },
+          child: ClipRRect(
+            borderRadius: const BorderRadius.all(
+              Radius.circular(20),
+            ),
+            child: Container(
+              height: 30,
+              width: 180,
+              color: Colors.amber,
+              child: Image(
+                image: NetworkImage(
+                    '${Constants.imagePath}${snapshot.data[index].poster_path}'),
+                fit: BoxFit.cover,
+              ),
             ),
           ),
         );
