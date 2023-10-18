@@ -37,9 +37,7 @@ class List_Theater extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => seatSidePage(
-                            booked: ["00"]
-                          ),
+                          builder: (context) => seatSidePage(booked: ["01"]),
                         ),
                       );
                     },
