@@ -19,10 +19,12 @@ class _seatSidePageState extends State<seatSidePage> {
     super.initState();
     // Khởi tạo mảng seatStatus với tất cả ghế là trống (false)
     seatStatus = List.generate(10, (row) => List.generate(10, (col) => 0));
-    for (String i in widget.booked) {
-      int x = int.parse(i[0]);
-      int y = int.parse(i[1]);
-      seatStatus[x][y] = 2;
+    if (widget.booked.length > 0) {
+      for (String i in widget.booked) {
+        int x = int.parse(i[0]);
+        int y = int.parse(i[1]);
+        seatStatus[x][y] = 2;
+      }
     }
   }
 
@@ -100,7 +102,7 @@ class _seatSidePageState extends State<seatSidePage> {
                           )),
                     ),
                     Text(
-                      "Ghế đang được giữ",
+                      "Ghế đang giữ",
                       style: TextStyle(fontSize: 16),
                     )
                   ],
@@ -186,6 +188,7 @@ class _seatSidePageState extends State<seatSidePage> {
           GButton(
             onPressed: () {
               if (money > 0) {
+
                 showDialog(
                   context: context,
                   builder: (BuildContext context) {

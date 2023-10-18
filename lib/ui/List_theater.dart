@@ -3,7 +3,6 @@ import 'package:cinema/ui/seatSitePage.dart';
 import 'package:cinema/viewmodel/ViewModel.dart';
 import 'package:flutter/material.dart';
 
-import '../models/menu_food.dart';
 
 class List_Theater extends StatelessWidget {
   const List_Theater({super.key});
@@ -17,7 +16,7 @@ class List_Theater extends StatelessWidget {
       stream: viewModel.getTheater(),
       builder: (context, snapshot) {
         if (snapshot.hasError) {
-          return Text("${snapshot.error}");
+          return Text("Loi: ${snapshot.error}");
         } else {
           List<theater> the = snapshot.data ?? [];
           return Scaffold(
@@ -37,7 +36,7 @@ class List_Theater extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => seatSidePage(booked: ["01"]),
+                          builder: (context) => seatSidePage(booked: the[index].seat),
                         ),
                       );
                     },
