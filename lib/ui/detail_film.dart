@@ -1,5 +1,6 @@
 import 'package:cinema/models/constants.dart';
 import 'package:cinema/models/movie.dart';
+import 'package:cinema/ui/List_theater.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
@@ -16,12 +17,15 @@ class detail_film extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Image(
-              width: widthScreen,
-              image: NetworkImage(
-                "${Constants.imagePath}${movie.backdrop_path}",
+            Hero(
+              tag: movie.title,
+              child: Image(
+                width: widthScreen,
+                image: NetworkImage(
+                  "${Constants.imagePath}${movie.backdrop_path}",
+                ),
+                fit: BoxFit.cover,
               ),
-              fit: BoxFit.cover,
             ),
             SizedBox(
               height: 20,
@@ -87,7 +91,7 @@ class detail_film extends StatelessWidget {
         ),
       ),
       bottomNavigationBar: GNav(
-        selectedIndex: -1,
+        selectedIndex: 0,
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         gap: 10,
         color: Colors.blue,
@@ -96,10 +100,13 @@ class detail_film extends StatelessWidget {
         tabMargin: EdgeInsets.only(bottom: 10),
         tabs: [
           GButton(
-            icon: Icons.add_shopping_cart,
+            icon: Icons.theaters,
             text: "Buy the ticket",
             textColor: Colors.white,
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => List_Theater()));
+            },
           ),
         ],
       ),

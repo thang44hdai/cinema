@@ -18,23 +18,25 @@ class trendingMovies extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => detail_film(
-                        movie: snapshot.data[index],
-                      )),
+                  builder: (context) =>
+                      detail_film(movie: snapshot.data[index])),
             );
           },
           child: ClipRRect(
             borderRadius: const BorderRadius.all(
               Radius.circular(20),
             ),
-            child: Container(
-              height: 30,
-              width: 180,
-              color: Colors.blue,
-              child: Image(
-                image: NetworkImage(
-                    '${Constants.imagePath}${snapshot.data[index].poster_path}'),
-                fit: BoxFit.cover,
+            child: Hero(
+              tag: "${snapshot.data[index].title}",
+              child: Container(
+                height: 30,
+                width: 180,
+                color: Colors.blue,
+                child: Image(
+                  image: NetworkImage(
+                      '${Constants.imagePath}${snapshot.data[index].poster_path}'),
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
           ),

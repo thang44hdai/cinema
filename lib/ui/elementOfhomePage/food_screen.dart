@@ -9,7 +9,7 @@ class Food extends StatelessWidget {
   Widget build(BuildContext context) {
     ViewModel viewModel = ViewModel();
     return StreamBuilder<List<food>>(
-      stream: viewModel.getAll(),
+      stream: viewModel.getFood(),
       builder: (context, snapshot) {
         if (snapshot.hasError) {
           return Text("${snapshot.error}");
