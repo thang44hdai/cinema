@@ -35,9 +35,13 @@ class List_Theater extends StatelessWidget {
                   child: ListTile(
                     onTap: () {
                       Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => seatSidePage()));
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => seatSidePage(
+                            booked: ["00"]
+                          ),
+                        ),
+                      );
                     },
                     leading: Icon(Icons.location_city),
                     trailing: ClipRRect(

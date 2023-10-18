@@ -2,30 +2,45 @@ import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
 class seatSidePage extends StatefulWidget {
-  const seatSidePage({super.key});
+  final List<dynamic> booked;
+
+  const seatSidePage({required this.booked, super.key});
 
   @override
   State<seatSidePage> createState() => _seatSidePageState();
 }
 
 class _seatSidePageState extends State<seatSidePage> {
-  List<List<bool>> seatStatus = [];
+  List<List<int>> seatStatus = [];
+
+  // seatStatus = 0 => ghế trống
+  // seatStatus = 1 => ghế đang bị giữ
+  // seatStatus = 2 => ghế đã được đặt
   int money = 0;
 
   @override
   void initState() {
     super.initState();
     // Khởi tạo mảng seatStatus với tất cả ghế là trống (false)
-    seatStatus = List.generate(10, (row) => List.generate(10, (col) => false));
+    seatStatus = List.generate(10, (row) => List.generate(10, (col) => 0));
+    for (String i in widget.booked) {
+      int row = int.parse(i[0]);
+      int col = int.parse(i[1]);
+      seatStatus[row][col] = 2;
+    }
   }
 
   void toggleSeatStatus(int row, int col) {
     setState(() {
-      seatStatus[row][col] = !seatStatus[row][col];
-      if (seatStatus[row][col] == true)
+      if (seatStatus[row][col] == 0) {
+        seatStatus[row][col] == 1;
+      } else if (seatStatus[row][col] == 1) {
+        seatStatus[row][col] == 0;
+      }
+
+      if (seatStatus[row][col] == 1)
         money += 45000;
-      else
-        money -= 45000;
+      else if (seatStatus[row][col] == 0) money -= 45000;
     });
   }
 
@@ -142,8 +157,9 @@ class _seatSidePageState extends State<seatSidePage> {
                       height: 22,
                       margin: EdgeInsets.all(5),
                       decoration: BoxDecoration(
-                        color:
-                            seatStatus[row][col] ? Colors.blue : Colors.green,
+                        color: seatStatus[row][col] == 0
+                            ? Colors.green
+                            : (seatStatus[row][col] == 1? Colors.blue: Colors.red),
                         border: Border.all(
                           color: Colors.black,
                         ),
