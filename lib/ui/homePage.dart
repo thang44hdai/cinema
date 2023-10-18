@@ -1,4 +1,5 @@
-import 'package:cinema/ui/elementOfhomePage/food.dart';
+import 'package:cinema/models/menu_food.dart';
+import 'package:cinema/ui/elementOfhomePage/food_screen.dart';
 import 'package:cinema/ui/elementOfhomePage/isPlayingMovies.dart';
 import 'package:cinema/ui/elementOfhomePage/trendingMovies.dart';
 import 'package:cinema/ui/elementOfhomePage/upComingMovies.dart';

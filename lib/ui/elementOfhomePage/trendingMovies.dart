@@ -30,7 +30,7 @@ class trendingMovies extends StatelessWidget {
             child: Container(
               height: 30,
               width: 180,
-              color: Colors.amber,
+              color: Colors.blue,
               child: Image(
                 image: NetworkImage(
                     '${Constants.imagePath}${snapshot.data[index].poster_path}'),
