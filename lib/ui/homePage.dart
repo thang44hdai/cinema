@@ -22,6 +22,7 @@ class _homePageState extends State<homePage> {
   late Future<List<Movie>> future_trendingMovie;
   late Future<List<Movie>> future_isPlayingMovie;
   late Future<List<Movie>> future_upComingMovie;
+
   @override
   void initState() {
     super.initState();
@@ -38,6 +39,15 @@ class _homePageState extends State<homePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Hello ${widget.name}"),
+        leading: Container(
+          padding: EdgeInsets.only(left: 10),
+          height: 50,
+          width: 50,
+          child: Image(
+            image: NetworkImage(
+                "https://cdn.mservice.com.vn/app/img/booking/logo_beta.png"),
+          ),
+        ),
       ),
       body: SingleChildScrollView(
         child: Column(
