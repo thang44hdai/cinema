@@ -28,17 +28,20 @@ class isPlayingMovies extends StatelessWidget {
                         builder: (context) =>
                             detail_film(movie: snapshot.data[index])));
               },
-              child: ClipRRect(
-                borderRadius: BorderRadius.all(Radius.circular(10)),
-                child: Container(
-                  height: 200,
-                  width: 200,
-                  child: Image(
-                    image: NetworkImage(
-                        '${Constants.imagePath}${snapshot.data[index].poster_path}'),
+              child: Hero(
+                tag: "${snapshot.data[index].title}",
+                child: ClipRRect(
+                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                  child: Container(
                     height: 200,
                     width: 200,
-                    fit: BoxFit.cover,
+                    child: Image(
+                      image: NetworkImage(
+                          '${Constants.imagePath}${snapshot.data[index].poster_path}'),
+                      height: 200,
+                      width: 200,
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
               ),

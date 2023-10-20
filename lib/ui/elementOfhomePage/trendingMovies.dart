@@ -26,17 +26,14 @@ class trendingMovies extends StatelessWidget {
             borderRadius: const BorderRadius.all(
               Radius.circular(20),
             ),
-            child: Hero(
-              tag: "${snapshot.data[index].title}",
-              child: Container(
-                height: 30,
-                width: 180,
-                color: Colors.blue,
-                child: Image(
-                  image: NetworkImage(
-                      '${Constants.imagePath}${snapshot.data[index].poster_path}'),
-                  fit: BoxFit.cover,
-                ),
+            child: Container(
+              height: 50,
+              width: 200,
+              color: Colors.blue,
+              child: Image(
+                image: NetworkImage(
+                    '${Constants.imagePath}${snapshot.data[index].poster_path}'),
+                fit: BoxFit.cover,
               ),
             ),
           ),

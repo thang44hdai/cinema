@@ -50,6 +50,7 @@ class _homePageState extends State<homePage> {
         ),
       ),
       body: SingleChildScrollView(
+
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
