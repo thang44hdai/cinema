@@ -3,6 +3,7 @@ import 'package:cinema/ui/elementOfhomePage/food_screen.dart';
 import 'package:cinema/ui/elementOfhomePage/isPlayingMovies.dart';
 import 'package:cinema/ui/elementOfhomePage/trendingMovies.dart';
 import 'package:cinema/ui/elementOfhomePage/upComingMovies.dart';
+import 'package:cinema/ui/resultPage.dart';
 import 'package:flutter/material.dart';
 import '../models/constants.dart';
 import '../models/user.dart';
@@ -11,6 +12,7 @@ import '../models/movie.dart';
 
 class homePage extends StatefulWidget {
   final user User;
+
   const homePage({required this.User, super.key});
 
   @override
@@ -48,8 +50,15 @@ class _homePageState extends State<homePage> {
           ),
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => inforPage()));
+        },
+        child: Icon(Icons.person_2),
+        backgroundColor: Colors.blue,
+      ),
       body: SingleChildScrollView(
-
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
