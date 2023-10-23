@@ -1,10 +1,17 @@
+import 'dart:math';
+
+import 'package:cinema/models/theater.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
-class seatSidePage extends StatefulWidget {
-  const seatSidePage({required this.booked, super.key});
+import '../models/constants.dart';
+import '../models/user.dart';
 
-  final List<String> booked;
+class seatSidePage extends StatefulWidget {
+  const seatSidePage({required this.Theater, super.key});
+
+  final theater Theater;
 
   @override
   State<seatSidePage> createState() => _seatSidePageState();
@@ -13,14 +20,16 @@ class seatSidePage extends StatefulWidget {
 class _seatSidePageState extends State<seatSidePage> {
   List<List<int>> seatStatus = [];
   int money = 0;
-
+  List<List<int>> picked = [];
+  user User = Constants.User;
   @override
   void initState() {
     super.initState();
     // Khởi tạo mảng seatStatus với tất cả ghế là trống (false)
     seatStatus = List.generate(10, (row) => List.generate(10, (col) => 0));
-    if (widget.booked.length > 0) {
-      for (String i in widget.booked) {
+    List<String> booked = widget.Theater.seat;
+    if (booked.length > 0) {
+      for (String i in booked) {
         int x = int.parse(i[0]);
         int y = int.parse(i[1]);
         seatStatus[x][y] = 2;
@@ -31,8 +40,11 @@ class _seatSidePageState extends State<seatSidePage> {
   void toggleSeatStatus(int row, int col) {
     setState(() {
       if (seatStatus[row][col] == 0) {
+        picked.add([row, col]);
         seatStatus[row][col] = 1;
       } else if (seatStatus[row][col] == 1) {
+        List<int> l = [row, col];
+        picked.removeWhere((element) => element == l);
         seatStatus[row][col] = 0;
       }
       if (seatStatus[row][col] == 1)
@@ -40,12 +52,13 @@ class _seatSidePageState extends State<seatSidePage> {
       else
         money -= 45000;
     });
+    print(picked);
   }
 
   Color setColorSeat(int row, int col) {
-    if (seatStatus[row][col] == 0)
+    if (seatStatus[row][col] == 0) {
       return Colors.green;
-    else if (seatStatus[row][col] == 1) {
+    } else if (seatStatus[row][col] == 1) {
       return Colors.blue;
     } else {
       return Colors.red;
@@ -57,6 +70,29 @@ class _seatSidePageState extends State<seatSidePage> {
     return s + col.toString();
   }
 
+   void updateUser() async {
+    DocumentSnapshot documentSnapshot = await FirebaseFirestore.instance
+        .collection("users")
+        .doc("${User.account}${User.password}")
+        .get();
+
+    // Lấy giá trị của field ticket
+    final _ticket = documentSnapshot.get("ticket") as List<dynamic>;
+    final ticket = _ticket.cast<String>().toList();
+    // Cập nhật giá trị của field ticket
+    for(List<int> i in picked){
+      if(seatStatus[i[0]][i[1]]==2){
+        String seat = i[0].toString()+i[1].toString();
+        ticket.add(seat);
+      }
+    }
+
+    // Update document
+    await FirebaseFirestore.instance
+        .collection("users")
+        .doc("${User.account}${User.password}")
+        .update({"ticket": ticket});
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -188,6 +224,21 @@ class _seatSidePageState extends State<seatSidePage> {
           GButton(
             onPressed: () {
               if (money > 0) {
+                setState(() {
+                  for (List<int> i in picked) {
+                    if(seatStatus[i[0]][i[1]] == 1){
+                      seatStatus[i[0]][i[1]] = 2;
+                      String seat = i[0].toString()+i[1].toString();
+                      picked.remove([i[0], i[1]]);
+                      print(seat);
+                      updateUser();
+                    }
+                    else{
+                      picked.remove([i[0], i[1]]);
+                    }
+                  }
+                  money = 0;
+                });
 
                 showDialog(
                   context: context,

@@ -1,4 +1,6 @@
+import 'package:cinema/models/constants.dart';
 import 'package:cinema/models/theater.dart';
+import 'package:cinema/models/user.dart';
 import 'package:cinema/ui/seatSitePage.dart';
 import 'package:cinema/viewmodel/ViewModel.dart';
 import 'package:flutter/material.dart';
@@ -6,7 +8,6 @@ import 'package:flutter/material.dart';
 
 class List_Theater extends StatelessWidget {
   const List_Theater({super.key});
-
   @override
   Widget build(BuildContext context) {
     ViewModel viewModel = ViewModel();
@@ -36,7 +37,7 @@ class List_Theater extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => seatSidePage(booked: the[index].seat),
+                          builder: (context) => seatSidePage(Theater: the[index]),
                         ),
                       );
                     },
@@ -47,8 +48,7 @@ class List_Theater extends StatelessWidget {
                         width: 60,
                         color: Colors.white,
                         child: Image(
-                          image: NetworkImage(
-                              "https://homepage.momocdn.net/img/momo-upload-api-210907102204-637666069244403461.png"),
+                          image: NetworkImage(Constants.logo),
                         ),
                       ),
                     ),

@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:lottie/lottie.dart';
 
+import '../models/constants.dart';
 import 'homePage.dart';
 
 TextEditingController _tk_registerController = TextEditingController();
@@ -183,6 +184,7 @@ void signIn(BuildContext context, String tk, String mk) async {
     );
     //user a = user(name: "name", account: "account", password: "password", ticket: []);
     user a = await read_user(tk + mk);
+    Constants.User = a;
     // Đăng nhập thành công, chuyển hướng sang màn hình khác
     Navigator.of(context).pushReplacement(
       MaterialPageRoute(
