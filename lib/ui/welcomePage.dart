@@ -1,15 +1,20 @@
 import 'dart:async';
+import 'package:cinema/models/user.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:lottie/lottie.dart';
 
 import 'homePage.dart';
 
-TextEditingController _tkController = TextEditingController();
-TextEditingController _mkController = TextEditingController();
-TextEditingController _verifyPassWord = TextEditingController();
-TextEditingController _nameUser = TextEditingController();
+TextEditingController _tk_registerController = TextEditingController();
+TextEditingController _mk_registerController = TextEditingController();
+TextEditingController _verifyPassWordController = TextEditingController();
+TextEditingController _tk_loginController = TextEditingController();
+TextEditingController _mk_loginController = TextEditingController();
+TextEditingController _nameUserController = TextEditingController();
 
 const String x1 =
     "https://files.betacorp.vn/files/ecm/2023/10/05/don-thang-quy-di-combo-ma-mi-1702-x-621-shrink-113717-051023-74.jpg";
@@ -169,18 +174,20 @@ class welcomePage extends StatelessWidget {
   }
 }
 
-void signIn(BuildContext context, String tk, String mk, String name) async {
+void signIn(BuildContext context, String tk, String mk) async {
   try {
     final auth = FirebaseAuth.instance;
     UserCredential userCredential = await auth.signInWithEmailAndPassword(
       email: tk,
       password: mk,
     );
+    //user a = user(name: "name", account: "account", password: "password", ticket: []);
+    user a = await read_user(tk + mk);
     // Đăng nhập thành công, chuyển hướng sang màn hình khác
     Navigator.of(context).pushReplacement(
       MaterialPageRoute(
         builder: (context) => homePage(
-          name: name,
+          User: a,
         ),
       ),
     );
@@ -190,7 +197,7 @@ void signIn(BuildContext context, String tk, String mk, String name) async {
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text('Thông báo'),
-          content: Text('Tài khoản hoặc mật khẩu không chính xác!'),
+          content: Text(e.toString()),
           actions: [
             TextButton(
               child: Text('OK'),
@@ -202,6 +209,24 @@ void signIn(BuildContext context, String tk, String mk, String name) async {
         );
       },
     );
+  }
+}
+
+Future<user> read_user(String docs) async {
+  DocumentSnapshot documentSnapshot =
+      await FirebaseFirestore.instance.collection("users").doc(docs).get();
+
+  if (documentSnapshot.exists) {
+    var account = documentSnapshot.get("account");
+    var name = documentSnapshot.get("name");
+    var pw = documentSnapshot.get("password");
+    var _ticket = documentSnapshot.get("ticket") as List<dynamic>;
+    var ticket = _ticket.cast<String>().toList();
+
+    return user(name: name, account: account, password: pw, ticket: ticket);
+  } else {
+    print("Error");
+    return user(name: "", account: "", password: "", ticket: []);
   }
 }
 
@@ -228,12 +253,12 @@ class LoginDialog extends StatelessWidget {
                 ),
               ),
               TextField(
-                controller: _tkController,
+                controller: _tk_loginController,
                 decoration: InputDecoration(hintText: "Email:"),
               ),
               TextField(
                 obscureText: true,
-                controller: _mkController,
+                controller: _mk_loginController,
                 decoration: InputDecoration(
                   hintText: "Mật khẩu: ",
                 ),
@@ -243,8 +268,8 @@ class LoginDialog extends StatelessWidget {
               ),
               ElevatedButton(
                 onPressed: () {
-                  signIn(context, _tkController.text, _mkController.text,
-                      _nameUser.text);
+                  signIn(context, _tk_loginController.text,
+                      _mk_loginController.text);
                 },
                 child: Icon(Icons.login),
               )
@@ -254,6 +279,17 @@ class LoginDialog extends StatelessWidget {
       ),
     );
   }
+}
+
+void add_user(String acc, String name, String pw, List<String> ticket) {
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
+  final user = <String, dynamic>{
+    "account": acc,
+    "name": name,
+    "password": pw,
+    "ticket": ticket,
+  };
+  firestore.collection("users").doc(acc + pw).set(user);
 }
 
 class RegisterDialog extends StatelessWidget {
@@ -279,23 +315,23 @@ class RegisterDialog extends StatelessWidget {
                 ),
               ),
               TextField(
-                controller: _tkController,
+                controller: _tk_registerController,
                 decoration: InputDecoration(hintText: "Email:"),
               ),
               TextField(
-                controller: _nameUser,
+                controller: _nameUserController,
                 decoration: InputDecoration(
                   hintText: "Họ và tên:",
                 ),
               ),
               TextField(
                 obscureText: true,
-                controller: _mkController,
+                controller: _mk_registerController,
                 decoration: InputDecoration(hintText: "Mật khẩu: "),
               ),
               TextField(
                 obscureText: true,
-                controller: _verifyPassWord,
+                controller: _verifyPassWordController,
                 decoration: InputDecoration(
                   hintText: "Nhập lại mật khẩu: ",
                 ),
@@ -307,9 +343,15 @@ class RegisterDialog extends StatelessWidget {
                 onPressed: () {
                   final auth = FirebaseAuth.instance;
                   auth.createUserWithEmailAndPassword(
-                      email: _tkController.text, password: _mkController.text);
+                      email: _tk_registerController.text,
+                      password: _mk_registerController.text);
                   Navigator.pop(context);
-                  _tkController.text = _mkController.text = "";
+                  add_user(
+                      _tk_registerController.text,
+                      _nameUserController.text,
+                      _mk_registerController.text, []);
+                  _tk_registerController.text =
+                      _mk_registerController.text = "";
                   // Hiển thị thông báo đăng kí thành công
                   final snackBar = SnackBar(
                     content: Text('Đăng kí thành công!'),
@@ -361,7 +403,7 @@ class RetrieveDialog extends StatelessWidget {
                 height: 20,
               ),
               TextField(
-                controller: _tkController,
+                controller: _tk_loginController,
                 decoration: InputDecoration(hintText: "Email:"),
               ),
               SizedBox(

@@ -6,13 +6,14 @@ import 'package:cinema/ui/elementOfhomePage/upComingMovies.dart';
 import 'package:cinema/viewmodel/ViewModel.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../models/user.dart';
 import '../network/api.dart';
 import '../models/movie.dart';
 
 class homePage extends StatefulWidget {
-  final String name;
+  final user User;
 
-  const homePage({required this.name, super.key});
+  const homePage({required this.User, super.key});
 
   @override
   State<homePage> createState() => _homePageState();
@@ -38,7 +39,7 @@ class _homePageState extends State<homePage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Hello ${widget.name}"),
+        title: Text("Hello ${widget.User.name}"),
         leading: Container(
           padding: EdgeInsets.only(left: 10),
           height: 50,
