@@ -22,6 +22,7 @@ class _seatSidePageState extends State<seatSidePage> {
   int money = 0;
   List<List<int>> picked = [];
   user User = Constants.User;
+
   @override
   void initState() {
     super.initState();
@@ -70,20 +71,26 @@ class _seatSidePageState extends State<seatSidePage> {
     return s + col.toString();
   }
 
-   void updateUser() async {
+  void updateUser_and_Theater() async {
     DocumentSnapshot documentSnapshot = await FirebaseFirestore.instance
         .collection("users")
         .doc("${User.account}${User.password}")
         .get();
-
+    DocumentSnapshot documentSnapshot2 = await FirebaseFirestore.instance
+        .collection("theater")
+        .doc(widget.Theater.doc)
+        .get();
     // Lấy giá trị của field ticket
     final _ticket = documentSnapshot.get("ticket") as List<dynamic>;
     final ticket = _ticket.cast<String>().toList();
+    final _Seat = documentSnapshot2.get('seat') as List<dynamic>;
+    final Seat = _Seat.cast<String>().toList();
     // Cập nhật giá trị của field ticket
-    for(List<int> i in picked){
-      if(seatStatus[i[0]][i[1]]==2){
-        String seat = i[0].toString()+i[1].toString();
-        ticket.add(seat);
+    for (List<int> i in picked) {
+      if (seatStatus[i[0]][i[1]] == 2) {
+        String seat = i[0].toString() + i[1].toString();
+        ticket.add(seat+widget.Theater.doc);
+        Seat.add(seat);
       }
     }
 
@@ -92,7 +99,12 @@ class _seatSidePageState extends State<seatSidePage> {
         .collection("users")
         .doc("${User.account}${User.password}")
         .update({"ticket": ticket});
+    await FirebaseFirestore.instance
+        .collection("theater")
+        .doc(widget.Theater.doc)
+        .update({"seat": Seat});
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -226,14 +238,13 @@ class _seatSidePageState extends State<seatSidePage> {
               if (money > 0) {
                 setState(() {
                   for (List<int> i in picked) {
-                    if(seatStatus[i[0]][i[1]] == 1){
+                    if (seatStatus[i[0]][i[1]] == 1) {
                       seatStatus[i[0]][i[1]] = 2;
-                      String seat = i[0].toString()+i[1].toString();
+                      String seat = i[0].toString() + i[1].toString();
                       picked.remove([i[0], i[1]]);
                       print(seat);
-                      updateUser();
-                    }
-                    else{
+                      updateUser_and_Theater();
+                    } else {
                       picked.remove([i[0], i[1]]);
                     }
                   }
