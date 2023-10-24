@@ -131,35 +131,49 @@ Widget profile() {
     padding: EdgeInsets.only(left: 50, right: 50),
     child: ListView(
       children: [
-        ListTile(
-          leading: Icon(Icons.email),
-          title: Text(
-            Constants.User.account,
+        Card(
+          child: ListTile(
+            leading: Icon(Icons.email),
+            title: Text(
+              Constants.User.account,
+            ),
           ),
         ),
-        ListTile(
-          leading: Icon(Icons.phone),
-          title: Text("03651898989"),
+        Card(
+          child: ListTile(
+            leading: Icon(Icons.phone),
+            title: Text("03651898989"),
+          ),
         ),
-        ListTile(
-          leading: Icon(Icons.location_history),
-          title: Text("Hà Nội, Việt Nam"),
+        Card(
+          child: ListTile(
+            leading: Icon(Icons.location_history),
+            title: Text("Hà Nội, Việt Nam"),
+          ),
         ),
-        ListTile(
-          leading: Icon(Icons.facebook),
-          title: Text("facebook.com/profile.php?id=100015341652892"),
+        Card(
+          child: ListTile(
+            leading: Icon(Icons.facebook),
+            title: Text("facebook.com/profile.php?id=100015341652892"),
+          ),
         ),
-        ListTile(
-          leading: Icon(Icons.school),
-          title: Text("Test"),
+        Card(
+          child: ListTile(
+            leading: Icon(Icons.school),
+            title: Text("Test"),
+          ),
         ),
-        ListTile(
-          leading: Icon(Icons.location_history),
-          title: Text("Hà Nội, Việt Nam"),
+        Card(
+          child: ListTile(
+            leading: Icon(Icons.location_history),
+            title: Text("Hà Nội, Việt Nam"),
+          ),
         ),
-        ListTile(
-          leading: Icon(Icons.location_history),
-          title: Text("Hà Nội, Việt Nam"),
+        Card(
+          child: ListTile(
+            leading: Icon(Icons.location_history),
+            title: Text("Hà Nội, Việt Nam"),
+          ),
         ),
       ],
     ),

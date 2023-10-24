@@ -250,7 +250,6 @@ class _seatSidePageState extends State<seatSidePage> {
                   }
                   money = 0;
                 });
-
                 showDialog(
                   context: context,
                   builder: (BuildContext context) {
@@ -289,6 +288,7 @@ class _seatSidePageState extends State<seatSidePage> {
               }
             },
             icon: Icons.attach_money_sharp,
+            iconColor: Colors.white,
             text: "  Pay ${money}  ",
             textColor: Colors.white,
           ),

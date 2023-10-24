@@ -2,11 +2,9 @@ import 'dart:async';
 import 'package:cinema/models/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:lottie/lottie.dart';
-
 import '../models/constants.dart';
 import 'homePage.dart';
 
@@ -62,45 +60,13 @@ class welcomePage extends StatelessWidget {
             ),
           ),
           const SizedBox(
-            height: 20,
+            height: 40,
           ),
-          Padding(
-            padding: EdgeInsets.only(left: 30),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Container(
-                  height: screenHeight / 5,
-                  child: Lottie.asset("assets/B.json"),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 8),
-                  child: Text(
-                    "e  t  a",
-                    style: TextStyle(
-                      fontSize: 80,
-                      fontWeight: FontWeight.bold,
-                      color: Color.fromRGBO(18, 36, 64, 1),
-                    ),
-                  ),
-                )
-              ],
+          Center(
+            child: Container(
+              height: screenHeight / 3,
+              child: Lottie.asset("assets/cinema.json"),
             ),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(right: 35),
-                child: Text(
-                  "CINEMA",
-                  style: TextStyle(
-                    fontSize: 20,
-                    color: Color.fromRGBO(18, 36, 64, 1),
-                  ),
-                ),
-              )
-            ],
           ),
         ],
       ),
@@ -236,45 +202,88 @@ class LoginDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Dialog(
-      backgroundColor: Color.fromRGBO(159, 182, 237, 1),
+      backgroundColor: Colors.white,
       child: Padding(
         padding: EdgeInsets.only(
           top: 50,
-          left: 20,
-          right: 20,
+          left: 10,
+          right: 10,
         ),
         child: Container(
           child: Column(
             children: [
-              Text(
-                "Login",
-                style: TextStyle(
-                  fontSize: 20,
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
+              Container(
+                child: Image.asset('assets/welcome.png'),
+                height: 80,
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              ListTile(
+                leading: Icon(
+                  Icons.email,
+                  color: Color.fromRGBO(7, 9, 133, 1),
                 ),
-              ),
-              TextField(
-                controller: _tk_loginController,
-                decoration: InputDecoration(hintText: "Email:"),
-              ),
-              TextField(
-                obscureText: true,
-                controller: _mk_loginController,
-                decoration: InputDecoration(
-                  hintText: "Mật khẩu: ",
+                title: TextField(
+                  controller: _tk_loginController,
+                  decoration: InputDecoration(
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Color.fromRGBO(7, 9, 133, 1),
+                      ),
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    hintText: "Email:",
+                    hintStyle: TextStyle(
+                      color: Color.fromRGBO(7, 9, 133, 1),
+                    ),
+                  ),
+                  style: TextStyle(
+                    color: Color.fromRGBO(7, 9, 133, 1),
+                  ),
                 ),
               ),
               SizedBox(
                 height: 20,
+              ),
+              ListTile(
+                leading: Icon(
+                  Icons.lock,
+                  color: Color.fromRGBO(7, 9, 133, 1),
+                ),
+                title: TextField(
+                  obscureText: true,
+                  controller: _mk_loginController,
+                  decoration: InputDecoration(
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Color.fromRGBO(7, 9, 133, 1),
+                      ),
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    hintText: "Mật khẩu: ",
+                    hintStyle: TextStyle(
+                      color: Color.fromRGBO(7, 9, 133, 1),
+                    ),
+                  ),
+                  style: TextStyle(
+                    color: Color.fromRGBO(7, 9, 133, 1),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 30,
               ),
               ElevatedButton(
                 onPressed: () {
                   signIn(context, _tk_loginController.text,
                       _mk_loginController.text);
                 },
-                child: Icon(Icons.login),
-              )
+                child: Icon(
+                  Icons.login,
+                  color: Color.fromRGBO(7, 9, 133, 1),
+                ),
+              ),
             ],
           ),
         ),
@@ -298,7 +307,7 @@ class RegisterDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Dialog(
-      backgroundColor: Color.fromRGBO(159, 182, 237, 1),
+      backgroundColor: Colors.white,
       child: Padding(
         padding: EdgeInsets.only(
           top: 40,
@@ -308,34 +317,108 @@ class RegisterDialog extends StatelessWidget {
         child: Container(
           child: Column(
             children: [
-              Text(
-                "Register",
-                style: TextStyle(
-                  fontSize: 20,
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
+              Container(
+                height: 50,
+                child: Image(
+                  image: AssetImage('assets/welcome.png'),
                 ),
+              ),
+              SizedBox(
+                height: 20,
               ),
               TextField(
                 controller: _tk_registerController,
-                decoration: InputDecoration(hintText: "Email:"),
+                decoration: InputDecoration(
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Color.fromRGBO(7, 9, 133, 1),
+                      ),
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    icon: Icon(
+                      Icons.email,
+                      color: Color.fromRGBO(7, 9, 133, 1),
+                    ),
+                    hintText: "Email:",
+                    hintStyle: TextStyle(
+                      color: Color.fromRGBO(7, 9, 133, 1),
+                    )),
+                style: TextStyle(
+                  color: Color.fromRGBO(7, 9, 133, 1),
+                ),
+              ),
+              SizedBox(
+                height: 14,
               ),
               TextField(
                 controller: _nameUserController,
                 decoration: InputDecoration(
-                  hintText: "Họ và tên:",
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Color.fromRGBO(7, 9, 133, 1),
+                      ),
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    icon: Icon(
+                      Icons.person,
+                      color: Color.fromRGBO(7, 9, 133, 1),
+                    ),
+                    hintText: "Họ và tên:",
+                    hintStyle: TextStyle(
+                      color: Color.fromRGBO(7, 9, 133, 1),
+                    )),
+                style: TextStyle(
+                  color: Color.fromRGBO(7, 9, 133, 1),
                 ),
+              ),
+              SizedBox(
+                height: 14,
               ),
               TextField(
                 obscureText: true,
                 controller: _mk_registerController,
-                decoration: InputDecoration(hintText: "Mật khẩu: "),
+                decoration: InputDecoration(
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Color.fromRGBO(7, 9, 133, 1),
+                      ),
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    icon: Icon(
+                      Icons.lock,
+                      color: Color.fromRGBO(7, 9, 133, 1),
+                    ),
+                    hintText: "Mật khẩu:",
+                    hintStyle: TextStyle(
+                      color: Color.fromRGBO(7, 9, 133, 1),
+                    )),
+                style: TextStyle(
+                  color: Color.fromRGBO(7, 9, 133, 1),
+                ),
+              ),
+              SizedBox(
+                height: 14,
               ),
               TextField(
                 obscureText: true,
                 controller: _verifyPassWordController,
                 decoration: InputDecoration(
-                  hintText: "Nhập lại mật khẩu: ",
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Color.fromRGBO(7, 9, 133, 1),
+                      ),
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    icon: Icon(
+                      Icons.lock,
+                      color: Color.fromRGBO(7, 9, 133, 1),
+                    ),
+                    hintText: "Nhập lại mật khẩu:",
+                    hintStyle: TextStyle(
+                      color: Color.fromRGBO(7, 9, 133, 1),
+                    )),
+                style: TextStyle(
+                  color: Color.fromRGBO(7, 9, 133, 1),
                 ),
               ),
               SizedBox(
@@ -367,7 +450,10 @@ class RegisterDialog extends StatelessWidget {
                     },
                   );
                 },
-                child: Icon(Icons.app_registration_sharp),
+                child: Icon(
+                  Icons.app_registration_sharp,
+                  color: Color.fromRGBO(7, 9, 133, 1),
+                ),
               )
             ],
           ),
@@ -383,7 +469,7 @@ class RetrieveDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Dialog(
-      backgroundColor: Color.fromRGBO(159, 182, 237, 1),
+      backgroundColor: Colors.white,
       child: Padding(
         padding: EdgeInsets.only(
           top: 40,
@@ -397,23 +483,43 @@ class RetrieveDialog extends StatelessWidget {
                 "Retrieve PassWord",
                 style: TextStyle(
                   fontSize: 20,
-                  color: Colors.white,
+                  color: Color.fromRGBO(7, 9, 133, 1),
                   fontWeight: FontWeight.bold,
                 ),
               ),
               SizedBox(
-                height: 20,
+                height: 50,
               ),
               TextField(
                 controller: _tk_loginController,
-                decoration: InputDecoration(hintText: "Email:"),
+                decoration: InputDecoration(
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Color.fromRGBO(7, 9, 133, 1),
+                      ),
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    icon: Icon(
+                      Icons.email,
+                      color: Color.fromRGBO(7, 9, 133, 1),
+                    ),
+                    hintText: "Email:",
+                    hintStyle: TextStyle(
+                      color: Color.fromRGBO(7, 9, 133, 1),
+                    )),
+                style: TextStyle(
+                  color: Color.fromRGBO(7, 9, 133, 1),
+                ),
               ),
               SizedBox(
-                height: 20,
+                height: 40,
               ),
               ElevatedButton(
                 onPressed: () {},
-                child: Icon(Icons.restore),
+                child: Icon(
+                  Icons.restore,
+                  color: Color.fromRGBO(7, 9, 133, 1),
+                ),
               ),
             ],
           ),
