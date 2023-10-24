@@ -324,7 +324,7 @@ class RegisterDialog extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                height: 20,
+                height: 10,
               ),
               TextField(
                 controller: _tk_registerController,
@@ -348,7 +348,7 @@ class RegisterDialog extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                height: 14,
+                height: 12,
               ),
               TextField(
                 controller: _nameUserController,
@@ -372,7 +372,7 @@ class RegisterDialog extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                height: 14,
+                height: 12,
               ),
               TextField(
                 obscureText: true,
@@ -397,7 +397,7 @@ class RegisterDialog extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                height: 14,
+                height: 12,
               ),
               TextField(
                 obscureText: true,
@@ -422,7 +422,7 @@ class RegisterDialog extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                height: 20,
+                height: 10,
               ),
               ElevatedButton(
                 onPressed: () {

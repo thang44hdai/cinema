@@ -90,7 +90,7 @@ Widget Background() {
 Widget Ava() {
   return Positioned(
     top: 160,
-    left: 140,
+    left: 110,
     child: Column(
       children: [
         CircleAvatar(

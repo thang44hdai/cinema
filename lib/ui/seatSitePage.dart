@@ -209,8 +209,8 @@ class _seatSidePageState extends State<seatSidePage> {
                     },
                     child: Container(
                       child: Text("${seat(row, col)}"),
-                      width: 22,
-                      height: 22,
+                      width: 26,
+                      height: 26,
                       margin: EdgeInsets.all(5),
                       decoration: BoxDecoration(
                         color: setColorSeat(row, col),
