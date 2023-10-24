@@ -39,14 +39,17 @@ class _homePageState extends State<homePage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Hello ${Constants.User.name}"),
+        backgroundColor: Color.fromRGBO(1, 81, 152, 1),
+        title: Text(
+          "Hello ${Constants.User.name}",
+          style: TextStyle(color: Colors.white),
+        ),
         leading: Container(
           padding: EdgeInsets.only(left: 10),
           height: 50,
           width: 50,
           child: Image(
-            image: NetworkImage(
-                "https://cdn.mservice.com.vn/app/img/booking/logo_beta.png"),
+            image: AssetImage("assets/home.png"),
           ),
         ),
       ),
@@ -56,45 +59,67 @@ class _homePageState extends State<homePage> {
           Navigator.push(
               context, MaterialPageRoute(builder: (context) => inforPage()));
         },
-        child: Icon(Icons.person_2),
-        backgroundColor: Colors.blue,
+        child: Icon(
+          Icons.person_2,
+          color: Colors.white,
+        ),
+        backgroundColor: Color.fromRGBO(1, 81, 152, 1),
       ),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Trending Movies
-            const Padding(
-              padding: EdgeInsets.only(left: 10, bottom: 10),
-              child: Text(
-                "Trending",
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              ),
-            ),
-            SizedBox(
-              child: FutureBuilder(
-                future: future_trendingMovie,
-                builder: (context, snapshot) {
-                  if (snapshot.hasError) {
-                    return Center(
-                      child: Text("${snapshot.error}"),
-                    );
-                  } else if (snapshot.hasData) {
-                    return trendingMovies(snapshot: snapshot);
-                  } else {
-                    return Center(
-                      child: Container(
-                        color: Colors.amber,
+            ClipRRect(
+              borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(10),
+                  bottomRight: Radius.circular(10)),
+              child: Container(
+                color: Color.fromRGBO(1, 81, 152, 1),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Padding(
+                      padding: EdgeInsets.only(left: 10, bottom: 10),
+                      child: Text(
+                        "Trending",
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
                       ),
-                    );
-                  }
-                },
+                    ),
+                    SizedBox(
+                      child: FutureBuilder(
+                        future: future_trendingMovie,
+                        builder: (context, snapshot) {
+                          if (snapshot.hasError) {
+                            return Center(
+                              child: Text("${snapshot.error}"),
+                            );
+                          } else if (snapshot.hasData) {
+                            return trendingMovies(snapshot: snapshot);
+                          } else {
+                            return Center(
+                              child: Container(
+                                color: Colors.amber,
+                              ),
+                            );
+                          }
+                        },
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    )
+                  ],
+                ),
               ),
             ),
             const SizedBox(
               height: 20,
             ),
-
             // Hiện đang khởi chiếu
             const Padding(
               padding: EdgeInsets.only(
@@ -103,7 +128,7 @@ class _homePageState extends State<homePage> {
               ),
               child: Text(
                 "Hiện đang khởi chiếu",
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
               ),
             ),
             SizedBox(
@@ -140,7 +165,7 @@ class _homePageState extends State<homePage> {
               ),
               child: Text(
                 "Sắp phát hành",
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
               ),
             ),
             SizedBox(
@@ -174,8 +199,8 @@ class _homePageState extends State<homePage> {
                 bottom: 10,
               ),
               child: Text(
-                "Popcorn and Drink",
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                "Food and Drink",
+                style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
               ),
             ),
             SizedBox(
