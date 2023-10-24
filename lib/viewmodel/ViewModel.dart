@@ -4,7 +4,6 @@ import '../models/theater.dart';
 
 class ViewModel {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
-
   Stream<List<food>> getFood() {
     Stream<QuerySnapshot<Map<String, dynamic>>> snapshot =
         firestore.collection("food").snapshots();
@@ -26,5 +25,4 @@ class ViewModel {
       }).toList();
     });
   }
-
 }

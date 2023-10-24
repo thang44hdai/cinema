@@ -3,7 +3,7 @@ import 'package:cinema/ui/elementOfhomePage/food_screen.dart';
 import 'package:cinema/ui/elementOfhomePage/isPlayingMovies.dart';
 import 'package:cinema/ui/elementOfhomePage/trendingMovies.dart';
 import 'package:cinema/ui/elementOfhomePage/upComingMovies.dart';
-import 'package:cinema/ui/resultPage.dart';
+import 'package:cinema/ui/profilePage.dart';
 import 'package:flutter/material.dart';
 import '../models/constants.dart';
 import '../models/user.dart';
@@ -51,6 +51,7 @@ class _homePageState extends State<homePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
+        shape: CircleBorder(),
         onPressed: () {
           Navigator.push(
               context, MaterialPageRoute(builder: (context) => inforPage()));
