@@ -78,7 +78,7 @@ class loginPage extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         image: DecorationImage(
-          image: AssetImage('assets/seat.jpg'),
+          image: AssetImage('assets/bg_login.png'),
           fit: BoxFit.fill,
           colorFilter: ColorFilter.mode(
               Color.fromRGBO(1, 81, 152, 1).withOpacity(0.5),
@@ -96,7 +96,7 @@ class loginPage extends StatelessWidget {
                     bottomLeft: Radius.circular(20)),
                 child: Container(
                   color: Colors.white,
-                  height: 600,
+                  height: 550,
                   width: widthScreen,
                   child: Padding(
                     padding: EdgeInsets.all(32),

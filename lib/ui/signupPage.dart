@@ -32,7 +32,7 @@ class signupPage extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         image: DecorationImage(
-          image: AssetImage('assets/seat.jpg'),
+          image: AssetImage('assets/bg_login.png'),
           fit: BoxFit.fill,
           colorFilter: ColorFilter.mode(
               Color.fromRGBO(1, 81, 152, 1).withOpacity(0.5),
