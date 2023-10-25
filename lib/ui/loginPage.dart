@@ -1,3 +1,4 @@
+import 'package:cinema/ui/signupPage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -96,7 +97,7 @@ class loginPage extends StatelessWidget {
                     bottomLeft: Radius.circular(20)),
                 child: Container(
                   color: Colors.white,
-                  height: 550,
+                  height: 560,
                   width: widthScreen,
                   child: Padding(
                     padding: EdgeInsets.all(32),
@@ -121,7 +122,7 @@ class loginPage extends StatelessWidget {
                           "Please log in your information",
                         ),
                         SizedBox(
-                          height: 20,
+                          height: 15,
                         ),
                         TextField(
                           controller: _tk_loginController,
@@ -142,7 +143,7 @@ class loginPage extends StatelessWidget {
                           ),
                         ),
                         SizedBox(
-                          height: 20,
+                          height: 15,
                         ),
                         TextField(
                           obscureText: true,
@@ -164,7 +165,7 @@ class loginPage extends StatelessWidget {
                           ),
                         ),
                         SizedBox(
-                          height: 30,
+                          height: 20,
                         ),
                         ElevatedButton(
                           onPressed: () {
@@ -184,6 +185,24 @@ class loginPage extends StatelessWidget {
                               color: Colors.white,
                             ),
                           ),
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                                "Not a member?"),
+                            TextButton(
+                                onPressed: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => signupPage()));
+                                },
+                                child: Text("Register")),
+                          ],
                         ),
                       ],
                     ),
