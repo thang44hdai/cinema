@@ -1,8 +1,8 @@
-import 'package:cinema/models/menu_food.dart';
 import 'package:cinema/ui/elementOfhomePage/food_screen.dart';
 import 'package:cinema/ui/elementOfhomePage/isPlayingMovies.dart';
 import 'package:cinema/ui/elementOfhomePage/trendingMovies.dart';
 import 'package:cinema/ui/elementOfhomePage/upComingMovies.dart';
+import 'package:cinema/ui/loginPage.dart';
 import 'package:cinema/ui/profilePage.dart';
 import 'package:flutter/material.dart';
 import '../models/constants.dart';
@@ -37,6 +37,31 @@ class _homePageState extends State<homePage> {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
 
+    Widget LoginButton() {
+      return ElevatedButton(
+          onPressed: () {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => loginPage()));
+          },
+          child: Text(
+            "Log In",
+          ));
+    }
+
+    Widget SignUpButton() {
+      return ElevatedButton(
+          onPressed: () {
+            Constants.login_state = 0;
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => homePage(User: Constants.User)));
+          },
+          child: Text(
+            "Log Out",
+          ));
+    }
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color.fromRGBO(1, 81, 152, 1),
@@ -52,6 +77,9 @@ class _homePageState extends State<homePage> {
             image: AssetImage("assets/home.png"),
           ),
         ),
+        actions: [
+           Constants.login_state == 0 ? LoginButton() : SignUpButton(),
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         shape: CircleBorder(),
@@ -191,7 +219,6 @@ class _homePageState extends State<homePage> {
             const SizedBox(
               height: 20,
             ),
-
             // Menu food
             const Padding(
               padding: EdgeInsets.only(

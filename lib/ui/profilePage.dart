@@ -1,4 +1,6 @@
 import 'package:cinema/models/constants.dart';
+import 'package:cinema/ui/loginPage.dart';
+import 'package:cinema/ui/requestLoginPage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
@@ -19,59 +21,63 @@ List<String> ve = [];
 class _inforPageState extends State<inforPage> {
   @override
   Widget build(BuildContext context) {
-    loadTicket();
-    heightScreen = MediaQuery.of(context).size.height;
-    widthScreen = MediaQuery.of(context).size.width;
-    return Scaffold(
-      body: Column(
-        children: [
-          Container(
-            height: 340,
-            child: Stack(
-              clipBehavior: Clip.none,
-              children: [
-                Background(),
-                Ava(),
-              ],
+    if (Constants.login_state == 1) {
+      loadTicket();
+      heightScreen = MediaQuery.of(context).size.height;
+      widthScreen = MediaQuery.of(context).size.width;
+      return Scaffold(
+        body: Column(
+          children: [
+            Container(
+              height: 340,
+              child: Stack(
+                clipBehavior: Clip.none,
+                children: [
+                  Background(),
+                  Ava(),
+                ],
+              ),
             ),
-          ),
-          Container(
-            height: 300,
-            child: fragment == 1 ? profile() : ticket(),
-          ),
-        ],
-      ),
-      bottomNavigationBar: GNav(
-        selectedIndex: 0,
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        gap: 10,
-        tabBackgroundColor: Color.fromRGBO(52, 101, 217, 1),
-        padding: EdgeInsets.all(10),
-        tabMargin: EdgeInsets.only(bottom: 10),
-        tabs: [
-          GButton(
-            icon: Icons.person_2,
-            text: "Cá nhân",
-            textColor: Colors.white,
-            onPressed: () {
-              setState(() {
-                fragment = 1;
-              });
-            },
-          ),
-          GButton(
-            icon: Icons.movie,
-            text: "Vé đặt",
-            textColor: Colors.white,
-            onPressed: () {
-              setState(() {
-                fragment = 2;
-              });
-            },
-          ),
-        ],
-      ),
-    );
+            Container(
+              height: 300,
+              child: fragment == 1 ? profile() : ticket(),
+            ),
+          ],
+        ),
+        bottomNavigationBar: GNav(
+          selectedIndex: 0,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          gap: 10,
+          tabBackgroundColor: Color.fromRGBO(52, 101, 217, 1),
+          padding: EdgeInsets.all(10),
+          tabMargin: EdgeInsets.only(bottom: 10),
+          tabs: [
+            GButton(
+              icon: Icons.person_2,
+              text: "Cá nhân",
+              textColor: Colors.white,
+              onPressed: () {
+                setState(() {
+                  fragment = 1;
+                });
+              },
+            ),
+            GButton(
+              icon: Icons.movie,
+              text: "Vé đặt",
+              textColor: Colors.white,
+              onPressed: () {
+                setState(() {
+                  fragment = 2;
+                });
+              },
+            ),
+          ],
+        ),
+      );
+    } else {
+      return requestLogin();
+    }
   }
 }
 

@@ -22,6 +22,7 @@ void signIn(BuildContext context, String tk, String mk) async {
     //user a = user(name: "name", account: "account", password: "password", ticket: []);
     user a = await read_user(tk + mk);
     Constants.User = a;
+    Constants.login_state = 1;
     // Đăng nhập thành công, chuyển hướng sang màn hình khác
     Navigator.of(context).pushReplacement(
       MaterialPageRoute(

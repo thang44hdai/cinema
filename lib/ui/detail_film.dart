@@ -1,6 +1,7 @@
 import 'package:cinema/models/constants.dart';
 import 'package:cinema/models/movie.dart';
 import 'package:cinema/ui/List_theater.dart';
+import 'package:cinema/ui/requestLoginPage.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
@@ -104,8 +105,13 @@ class detail_film extends StatelessWidget {
             text: "Buy the ticket",
             textColor: Colors.white,
             onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => List_Theater()));
+              if (Constants.login_state == 1) {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => List_Theater()));
+              } else {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => requestLogin()));
+              }
             },
           ),
         ],
