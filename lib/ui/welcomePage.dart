@@ -1,5 +1,7 @@
 import 'dart:async';
 import 'package:cinema/models/user.dart';
+import 'package:cinema/ui/loginPage.dart';
+import 'package:cinema/ui/signupPage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -74,7 +76,7 @@ class welcomePage extends StatelessWidget {
         selectedIndex: -1,
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         gap: 10,
-        tabBackgroundColor: Color.fromRGBO(52, 101, 217, 1),
+        tabBackgroundColor: Color.fromRGBO(1, 81, 152, 1),
         padding: EdgeInsets.all(10),
         tabMargin: EdgeInsets.only(bottom: 10),
         tabs: [
@@ -83,18 +85,7 @@ class welcomePage extends StatelessWidget {
             text: "Login",
             textColor: Colors.white,
             onPressed: () {
-              showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  return Center(
-                    child: FractionallySizedBox(
-                      widthFactor: 0.9,
-                      heightFactor: 0.8,
-                      child: LoginDialog(),
-                    ),
-                  );
-                },
-              );
+              Navigator.push(context, MaterialPageRoute(builder: (context)=>loginPage()));
             },
           ),
           GButton(
@@ -102,18 +93,7 @@ class welcomePage extends StatelessWidget {
             text: "Register",
             textColor: Colors.white,
             onPressed: () {
-              showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  return Center(
-                    child: FractionallySizedBox(
-                      widthFactor: 0.9,
-                      heightFactor: 0.8,
-                      child: RegisterDialog(),
-                    ),
-                  );
-                },
-              );
+              Navigator.push(context, MaterialPageRoute(builder: (context)=>signupPage()));
             },
           ),
           GButton(
@@ -141,157 +121,6 @@ class welcomePage extends StatelessWidget {
   }
 }
 
-void signIn(BuildContext context, String tk, String mk) async {
-  try {
-    final auth = FirebaseAuth.instance;
-    UserCredential userCredential = await auth.signInWithEmailAndPassword(
-      email: tk,
-      password: mk,
-    );
-    //user a = user(name: "name", account: "account", password: "password", ticket: []);
-    user a = await read_user(tk + mk);
-    Constants.User = a;
-    // Đăng nhập thành công, chuyển hướng sang màn hình khác
-    Navigator.of(context).pushReplacement(
-      MaterialPageRoute(
-        builder: (context) => homePage(
-          User: a,
-        ),
-      ),
-    );
-  } catch (e) {
-    return showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Thông báo'),
-          content: Text(e.toString()),
-          actions: [
-            TextButton(
-              child: Text('OK'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
-}
-
-Future<user> read_user(String docs) async {
-  DocumentSnapshot documentSnapshot =
-      await FirebaseFirestore.instance.collection("users").doc(docs).get();
-
-  if (documentSnapshot.exists) {
-    var account = documentSnapshot.get("account");
-    var name = documentSnapshot.get("name");
-    var pw = documentSnapshot.get("password");
-    var _ticket = documentSnapshot.get("ticket") as List<dynamic>;
-    var ticket = _ticket.cast<String>().toList();
-
-    return user(name: name, account: account, password: pw, ticket: ticket);
-  } else {
-    print("Error");
-    return user(name: "", account: "", password: "", ticket: []);
-  }
-}
-
-class LoginDialog extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Dialog(
-      backgroundColor: Colors.white,
-      child: Padding(
-        padding: EdgeInsets.only(
-          top: 50,
-          left: 10,
-          right: 10,
-        ),
-        child: Container(
-          child: Column(
-            children: [
-              Container(
-                child: Image.asset('assets/welcome.png'),
-                height: 80,
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              ListTile(
-                leading: Icon(
-                  Icons.email,
-                  color: Color.fromRGBO(7, 9, 133, 1),
-                ),
-                title: TextField(
-                  controller: _tk_loginController,
-                  decoration: InputDecoration(
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Color.fromRGBO(7, 9, 133, 1),
-                      ),
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    hintText: "Email:",
-                    hintStyle: TextStyle(
-                      color: Color.fromRGBO(7, 9, 133, 1),
-                    ),
-                  ),
-                  style: TextStyle(
-                    color: Color.fromRGBO(7, 9, 133, 1),
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              ListTile(
-                leading: Icon(
-                  Icons.lock,
-                  color: Color.fromRGBO(7, 9, 133, 1),
-                ),
-                title: TextField(
-                  obscureText: true,
-                  controller: _mk_loginController,
-                  decoration: InputDecoration(
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Color.fromRGBO(7, 9, 133, 1),
-                      ),
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    hintText: "Mật khẩu: ",
-                    hintStyle: TextStyle(
-                      color: Color.fromRGBO(7, 9, 133, 1),
-                    ),
-                  ),
-                  style: TextStyle(
-                    color: Color.fromRGBO(7, 9, 133, 1),
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 30,
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  signIn(context, _tk_loginController.text,
-                      _mk_loginController.text);
-                },
-                child: Icon(
-                  Icons.login,
-                  color: Color.fromRGBO(7, 9, 133, 1),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
 void add_user(String acc, String name, String pw, List<String> ticket) {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   final user = <String, dynamic>{
@@ -301,166 +130,6 @@ void add_user(String acc, String name, String pw, List<String> ticket) {
     "ticket": ticket,
   };
   firestore.collection("users").doc(acc + pw).set(user);
-}
-
-class RegisterDialog extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Dialog(
-      backgroundColor: Colors.white,
-      child: Padding(
-        padding: EdgeInsets.only(
-          top: 40,
-          left: 20,
-          right: 20,
-        ),
-        child: Container(
-          child: Column(
-            children: [
-              Container(
-                height: 50,
-                child: Image(
-                  image: AssetImage('assets/welcome.png'),
-                ),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              TextField(
-                controller: _tk_registerController,
-                decoration: InputDecoration(
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Color.fromRGBO(7, 9, 133, 1),
-                      ),
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    icon: Icon(
-                      Icons.email,
-                      color: Color.fromRGBO(7, 9, 133, 1),
-                    ),
-                    hintText: "Email:",
-                    hintStyle: TextStyle(
-                      color: Color.fromRGBO(7, 9, 133, 1),
-                    )),
-                style: TextStyle(
-                  color: Color.fromRGBO(7, 9, 133, 1),
-                ),
-              ),
-              SizedBox(
-                height: 12,
-              ),
-              TextField(
-                controller: _nameUserController,
-                decoration: InputDecoration(
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Color.fromRGBO(7, 9, 133, 1),
-                      ),
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    icon: Icon(
-                      Icons.person,
-                      color: Color.fromRGBO(7, 9, 133, 1),
-                    ),
-                    hintText: "Họ và tên:",
-                    hintStyle: TextStyle(
-                      color: Color.fromRGBO(7, 9, 133, 1),
-                    )),
-                style: TextStyle(
-                  color: Color.fromRGBO(7, 9, 133, 1),
-                ),
-              ),
-              SizedBox(
-                height: 12,
-              ),
-              TextField(
-                obscureText: true,
-                controller: _mk_registerController,
-                decoration: InputDecoration(
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Color.fromRGBO(7, 9, 133, 1),
-                      ),
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    icon: Icon(
-                      Icons.lock,
-                      color: Color.fromRGBO(7, 9, 133, 1),
-                    ),
-                    hintText: "Mật khẩu:",
-                    hintStyle: TextStyle(
-                      color: Color.fromRGBO(7, 9, 133, 1),
-                    )),
-                style: TextStyle(
-                  color: Color.fromRGBO(7, 9, 133, 1),
-                ),
-              ),
-              SizedBox(
-                height: 12,
-              ),
-              TextField(
-                obscureText: true,
-                controller: _verifyPassWordController,
-                decoration: InputDecoration(
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Color.fromRGBO(7, 9, 133, 1),
-                      ),
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    icon: Icon(
-                      Icons.lock,
-                      color: Color.fromRGBO(7, 9, 133, 1),
-                    ),
-                    hintText: "Nhập lại mật khẩu:",
-                    hintStyle: TextStyle(
-                      color: Color.fromRGBO(7, 9, 133, 1),
-                    )),
-                style: TextStyle(
-                  color: Color.fromRGBO(7, 9, 133, 1),
-                ),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  final auth = FirebaseAuth.instance;
-                  auth.createUserWithEmailAndPassword(
-                      email: _tk_registerController.text,
-                      password: _mk_registerController.text);
-                  Navigator.pop(context);
-                  add_user(
-                      _tk_registerController.text,
-                      _nameUserController.text,
-                      _mk_registerController.text, []);
-                  _tk_registerController.text =
-                      _mk_registerController.text = "";
-                  // Hiển thị thông báo đăng kí thành công
-                  final snackBar = SnackBar(
-                    content: Text('Đăng kí thành công!'),
-                  );
-                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                  // Đóng thông báo sau 2 giây
-                  Timer(
-                    Duration(seconds: 2),
-                    () {
-                      ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                    },
-                  );
-                },
-                child: Icon(
-                  Icons.app_registration_sharp,
-                  color: Color.fromRGBO(7, 9, 133, 1),
-                ),
-              )
-            ],
-          ),
-        ),
-      ),
-    );
-  }
 }
 
 class RetrieveDialog extends StatelessWidget {
@@ -483,7 +152,7 @@ class RetrieveDialog extends StatelessWidget {
                 "Retrieve PassWord",
                 style: TextStyle(
                   fontSize: 20,
-                  color: Color.fromRGBO(7, 9, 133, 1),
+                  color: Color.fromRGBO(1, 81, 152, 1),
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -491,34 +160,39 @@ class RetrieveDialog extends StatelessWidget {
                 height: 50,
               ),
               TextField(
+                obscureText: true,
                 controller: _tk_loginController,
                 decoration: InputDecoration(
                     enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(
-                        color: Color.fromRGBO(7, 9, 133, 1),
+                        color: Colors.black,
                       ),
                       borderRadius: BorderRadius.circular(20),
                     ),
-                    icon: Icon(
-                      Icons.email,
-                      color: Color.fromRGBO(7, 9, 133, 1),
-                    ),
                     hintText: "Email:",
                     hintStyle: TextStyle(
-                      color: Color.fromRGBO(7, 9, 133, 1),
+                      color: Colors.black,
                     )),
                 style: TextStyle(
-                  color: Color.fromRGBO(7, 9, 133, 1),
+                  color: Colors.black,
                 ),
               ),
+
               SizedBox(
                 height: 40,
               ),
               ElevatedButton(
                 onPressed: () {},
+                style: ElevatedButton.styleFrom(
+                  shape: StadiumBorder(),
+                  backgroundColor: Color.fromRGBO(1, 81, 152, 1),
+                  elevation: 20,
+                  shadowColor: Color.fromRGBO(1, 81, 152, 1),
+                  minimumSize: Size.fromHeight(60),
+                ),
                 child: Icon(
                   Icons.restore,
-                  color: Color.fromRGBO(7, 9, 133, 1),
+                  color: Colors.white,
                 ),
               ),
             ],
