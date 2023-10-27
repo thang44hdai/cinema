@@ -1,6 +1,6 @@
 # cinema
 
-A new Flutter project.
+Demo: https://www.youtube.com/watch?v=bgAtA1hvurU
 
 ## Getting Started
 
