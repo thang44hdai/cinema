@@ -75,9 +75,10 @@ class _inforPageState extends State<inforPage> {
           ],
         ),
       );
-    } else {
+    } else if (Constants.login_state == 0) {
       return requestLogin();
-    }
+    } else
+      return Text("Error");
   }
 }
 

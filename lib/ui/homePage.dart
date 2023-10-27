@@ -39,13 +39,18 @@ class _homePageState extends State<homePage> {
 
     Widget LoginButton() {
       return ElevatedButton(
-          onPressed: () {
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => loginPage()));
-          },
-          child: Text(
-            "Log In",
-          ));
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => loginPage(),
+            ),
+          );
+        },
+        child: Text(
+          "Log In",
+        ),
+      );
     }
 
     Widget SignUpButton() {
@@ -78,7 +83,10 @@ class _homePageState extends State<homePage> {
           ),
         ),
         actions: [
-           Constants.login_state == 0 ? LoginButton() : SignUpButton(),
+          Padding(
+            padding: EdgeInsets.only(right: 5),
+            child: Constants.login_state == 0 ? LoginButton() : SignUpButton(),
+          ),
         ],
       ),
       floatingActionButton: FloatingActionButton(

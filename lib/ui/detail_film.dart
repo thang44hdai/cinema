@@ -18,15 +18,34 @@ class detail_film extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Hero(
-              tag: movie.title,
-              child: Image(
-                width: widthScreen,
-                image: NetworkImage(
-                  "${Constants.imagePath}${movie.backdrop_path}",
+            Stack(
+              children: [
+                Hero(
+                  tag: movie.title,
+                  child: Image(
+                    width: widthScreen,
+                    image: NetworkImage(
+                      "${Constants.imagePath}${movie.backdrop_path}",
+                    ),
+                    fit: BoxFit.cover,
+                  ),
                 ),
-                fit: BoxFit.cover,
-              ),
+                Positioned(
+                  top: 20,
+                  child: IconButton(
+                    style: const ButtonStyle(
+                        backgroundColor:
+                            MaterialStatePropertyAll(Colors.grey)),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    icon: Icon(
+                      Icons.arrow_back_rounded,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ],
             ),
             SizedBox(
               height: 20,

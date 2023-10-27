@@ -32,6 +32,7 @@ void signIn(BuildContext context, String tk, String mk) async {
       ),
     );
   } catch (e) {
+    Constants.login_state = 0;
     return showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -89,129 +90,150 @@ class loginPage extends StatelessWidget {
       ),
       child: Scaffold(
         backgroundColor: Colors.transparent,
-        body: Stack(
-          children: [
-            Positioned(
-              child: ClipRRect(
-                borderRadius: BorderRadius.only(
-                    bottomRight: Radius.circular(20),
-                    bottomLeft: Radius.circular(20)),
-                child: Container(
-                  color: Colors.white,
-                  height: 560,
-                  width: widthScreen,
-                  child: Padding(
-                    padding: EdgeInsets.all(32),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Center(
-                          child: Container(
-                            margin: EdgeInsets.only(bottom: 20),
-                            child: Image.asset('assets/welcome.png'),
-                            height: 100,
-                          ),
-                        ),
-                        Text(
-                          "Welcome",
-                          style: TextStyle(
-                              color: Color.fromRGBO(1, 81, 152, 1),
-                              fontWeight: FontWeight.bold,
-                              fontSize: 32),
-                        ),
-                        Text(
-                          "Please log in your information",
-                        ),
-                        SizedBox(
-                          height: 15,
-                        ),
-                        TextField(
-                          controller: _tk_loginController,
-                          decoration: InputDecoration(
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Colors.black,
+        body: GestureDetector(
+          onTap: (){
+            FocusManager.instance.primaryFocus?.unfocus();
+          },
+          child: Stack(
+            children: [
+              Positioned(
+                child: ClipRRect(
+                  borderRadius: BorderRadius.only(
+                      bottomRight: Radius.circular(20),
+                      bottomLeft: Radius.circular(20)),
+                  child: Container(
+                    color: Colors.white,
+                    height: 560,
+                    width: widthScreen,
+                    child: Padding(
+                      padding: EdgeInsets.all(32),
+                      child: ListView(
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Center(
+                                child: Container(
+                                  margin: EdgeInsets.only(bottom: 20),
+                                  child: Image.asset('assets/welcome.png'),
+                                  height: 100,
+                                ),
                               ),
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            labelText: "Email:",
-                            labelStyle: TextStyle(
-                              color: Colors.black,
-                            ),
-                          ),
-                          style: TextStyle(
-                            color: Colors.black,
-                          ),
-                        ),
-                        SizedBox(
-                          height: 15,
-                        ),
-                        TextField(
-                          obscureText: true,
-                          controller: _mk_loginController,
-                          decoration: InputDecoration(
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Colors.black,
+                              Text(
+                                "Welcome",
+                                style: TextStyle(
+                                    color: Color.fromRGBO(1, 81, 152, 1),
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 32),
                               ),
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            labelText: "Mật khẩu: ",
-                            labelStyle: TextStyle(
-                              color: Colors.black,
-                            ),
-                          ),
-                          style: TextStyle(
-                            color: Colors.black,
-                          ),
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        ElevatedButton(
-                          onPressed: () {
-                            signIn(context, _tk_loginController.text,
-                                _mk_loginController.text);
-                          },
-                          style: ElevatedButton.styleFrom(
-                            shape: StadiumBorder(),
-                            backgroundColor: Color.fromRGBO(1, 81, 152, 1),
-                            elevation: 20,
-                            shadowColor: Color.fromRGBO(1, 81, 152, 1),
-                            minimumSize: Size.fromHeight(60),
-                          ),
-                          child: Text(
-                            "Login",
-                            style: TextStyle(
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                                "Not a member?"),
-                            TextButton(
+                              Text(
+                                "Please log in your information",
+                              ),
+                              SizedBox(
+                                height: 15,
+                              ),
+                              TextField(
+                                controller: _tk_loginController,
+                                decoration: InputDecoration(
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Colors.black,
+                                    ),
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                  labelText: "Email:",
+                                  labelStyle: TextStyle(
+                                    color: Colors.black,
+                                  ),
+                                ),
+                                style: TextStyle(
+                                  color: Colors.black,
+                                ),
+                              ),
+                              SizedBox(
+                                height: 15,
+                              ),
+                              TextField(
+                                obscureText: true,
+                                controller: _mk_loginController,
+                                decoration: InputDecoration(
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Colors.black,
+                                    ),
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                  labelText: "Mật khẩu: ",
+                                  labelStyle: TextStyle(
+                                    color: Colors.black,
+                                  ),
+                                ),
+                                style: TextStyle(
+                                  color: Colors.black,
+                                ),
+                              ),
+                              SizedBox(
+                                height: 20,
+                              ),
+                              ElevatedButton(
                                 onPressed: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => signupPage()));
+                                  signIn(context, _tk_loginController.text,
+                                      _mk_loginController.text);
                                 },
-                                child: Text("Register")),
-                          ],
-                        ),
-                      ],
+                                style: ElevatedButton.styleFrom(
+                                  shape: StadiumBorder(),
+                                  backgroundColor: Color.fromRGBO(1, 81, 152, 1),
+                                  elevation: 20,
+                                  shadowColor: Color.fromRGBO(1, 81, 152, 1),
+                                  minimumSize: Size.fromHeight(60),
+                                ),
+                                child: Text(
+                                  "Login",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                height: 20,
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                      "Not a member?"),
+                                  TextButton(
+                                      onPressed: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) => signupPage()));
+                                      },
+                                      child: Text("Register")),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-          ],
+              Positioned(
+                top: 20,
+                child: IconButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  icon: Icon(
+                    Icons.arrow_back_rounded,
+                    color: Colors.black,
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
