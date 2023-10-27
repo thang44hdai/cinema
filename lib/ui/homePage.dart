@@ -57,6 +57,11 @@ class _homePageState extends State<homePage> {
       return ElevatedButton(
           onPressed: () {
             Constants.login_state = 0;
+            Constants.User = user(
+                name: "friend",
+                account: "account",
+                password: "password",
+                ticket: []);
             Navigator.push(
                 context,
                 MaterialPageRoute(
