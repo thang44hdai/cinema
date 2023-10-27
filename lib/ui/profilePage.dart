@@ -35,6 +35,18 @@ class _inforPageState extends State<inforPage> {
                 children: [
                   Background(),
                   Ava(),
+                  Positioned(
+                    top: 20,
+                    child: IconButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      icon: Icon(
+                        Icons.arrow_back_rounded,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
